@@ -192,50 +192,59 @@
 
       const fontSize = '18px';
 
+      // 三角形
       const polygon = createPolygon({points: points});
       polygon.setAttribute('fill', 'yellow');
       polygon.setAttribute('stroke', 'black');
+
+      // 分母のテキスト
+      const textDenom = createText({x: (points[0][0] + points[1][0]) / 2, y: points[0][1] + 16, text: denom});
+      textDenom.setAttribute('font-size', fontSize);
+      textDenom.setAttribute('font-weight', 'bold');
+
+      // 分子のテキスト
+      const textNumer = createText({x: points[1][0] + 8, y: (points[1][1] + points[2][1]) / 2, text: numer});
+      textNumer.setAttribute('font-size', fontSize);
+      textNumer.setAttribute('font-weight', 'bold');
+      textNumer.setAttribute('text-anchor', 'start');
 
       if (pid == processId) elemFraction.setAttribute('fill', 'yellow');
 
       // 横線（分母）に注目
       if (pid == processId) highlightTextSvgElem(elemDenom);
       g.appendChild(polygon);
+      g.appendChild(textDenom);
+      g.appendChild(textNumer);
       {
         const line = createLine({x1: points[0][0], y1: points[0][1], x2: points[1][0], y2: points[1][1]});
         line.setAttribute('stroke', 'red');
         line.setAttribute('stroke-width', '3');
         g.appendChild(line);
 
-        const text = createText({x: (points[0][0] + points[1][0]) / 2, y: points[0][1] + 16, text: denom});
-        text.setAttribute('font-size', fontSize);
-        text.setAttribute('font-weight', 'bold');
-        text.setAttribute('fill', 'red');
-        g.appendChild(text);
+        textDenom.setAttribute('fill', 'red');
       }
       if (pid == processId) await sleep(intervalTime);
       if (pid == processId) unhighlightTextSvgElem(elemDenom);
+      textDenom.setAttribute('fill', 'black');
 
       g.innerHTML = ''; // 描いた図形を消去。
 
       // 縦線（分子）に注目
       if (pid == processId) highlightTextSvgElem(elemNumer);
       g.appendChild(polygon);
+      g.appendChild(textDenom);
+      g.appendChild(textNumer);
       {
         const line = createLine({x1: points[2][0], y1: points[2][1], x2: points[1][0], y2: points[1][1]});
         line.setAttribute('stroke', 'red');
         line.setAttribute('stroke-width', '3');
         g.appendChild(line);
 
-        const text = createText({x: points[1][0] + 8, y: (points[1][1] + points[2][1]) / 2, text: numer});
-        text.setAttribute('font-size', fontSize);
-        text.setAttribute('font-weight', 'bold');
-        text.setAttribute('fill', 'red');
-        text.setAttribute('text-anchor', 'start');
-        g.appendChild(text);
+        textNumer.setAttribute('fill', 'red');
       }
       if (pid == processId) await sleep(intervalTime);
       if (pid == processId) unhighlightTextSvgElem(elemNumer);
+      textNumer.setAttribute('fill', 'black');
 
       g.innerHTML = ''; // 描いた図形を消去。
 
@@ -247,6 +256,10 @@
           g.innerHTML = '';
           g.setAttribute('transform', `rotate(${deg} ${centerX} ${centerY})`);
           g.appendChild(polygon);
+          if (i != num) {
+            g.appendChild(textDenom);
+            g.appendChild(textNumer);
+          }
           if (pid == processId) await sleep(intervalTime / num);
         }
         polygon.setAttribute('fill', '#dff');
