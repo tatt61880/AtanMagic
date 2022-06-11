@@ -256,12 +256,6 @@
     }
     if (pid == processId) await sleep(intervalTime * 2);
 
-    for (const fraction of fractions) {
-      const numer = fraction.numer;
-      const denom = fraction.denom;
-      const elemFraction = document.getElementById(getFractionName(numer, denom));
-      elemFraction.setAttribute('fill', 'white');
-    }
     const precision = 15;
     const pi = (radian / 2).toPrecision(precision);
     if (pi != Math.PI.toPrecision(precision)) {
