@@ -35,6 +35,7 @@
   let speedLevel = defaultSpeedLevel;
   let intervalTime;
   let isPlaying = false;
+  const smallFontSize = '9px';
 
   window.addEventListener('load', init, false);
 
@@ -90,17 +91,16 @@
           g.appendChild(line);
         }
 
-        const fontSize = '9px';
         {
-          const text = createText({x: size * (x + 0.5) + offsetX, y: size * (y + 0.3) + offsetY, text: numer});
-          text.setAttribute('font-size', fontSize);
+          const text = createText({x: size * (x + 0.5) + offsetX, y: size * (y + 0.30) + offsetY, text: numer});
+          text.setAttribute('font-size', smallFontSize);
           text.setAttribute('id', numer);
           text.setAttribute('class', 'numer');
           g.appendChild(text);
         }
         {
-          const text = createText({x: size * (x + 0.51) + offsetX, y: size * (y + 0.76) + offsetY, text: denom});
-          text.setAttribute('font-size', fontSize);
+          const text = createText({x: size * (x + 0.51) + offsetX, y: size * (y + 0.77) + offsetY, text: denom});
+          text.setAttribute('font-size', smallFontSize);
           text.setAttribute('id', denom);
           text.setAttribute('class', 'denom');
           g.appendChild(text);
@@ -274,12 +274,14 @@
     if (elem === undefined) return;
     elem.setAttribute('fill', 'red');
     elem.setAttribute('font-weight', 'bold');
+    elem.setAttribute('font-size', '12px');
   }
 
   function unhighlightTextSvgElem(elem) {
     if (elem === undefined) return;
     elem.setAttribute('fill', 'black');
     elem.setAttribute('font-weight', 'normal');
+    elem.setAttribute('font-size', smallFontSize);
   }
 
   function createG() {
