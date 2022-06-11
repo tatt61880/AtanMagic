@@ -197,16 +197,17 @@
       polygon.setAttribute('stroke', 'black');
 
       if (pid == processId) elemFraction.setAttribute('fill', 'yellow');
-      g.appendChild(polygon);
-      // 分母（横線）
+
+      // 横線（分母）に注目
       if (pid == processId) highlightTextSvgElem(elemDenom);
+      g.appendChild(polygon);
       {
         const line = createLine({x1: points[0][0], y1: points[0][1], x2: points[1][0], y2: points[1][1]});
         line.setAttribute('stroke', 'red');
         line.setAttribute('stroke-width', '3');
         g.appendChild(line);
 
-        const text = createText({x: (points[0][0] + points[1][0]) / 2, y: points[0][1] + 15, text: denom});
+        const text = createText({x: (points[0][0] + points[1][0]) / 2, y: points[0][1] + 16, text: denom});
         text.setAttribute('font-size', fontSize);
         text.setAttribute('font-weight', 'bold');
         text.setAttribute('fill', 'red');
@@ -217,7 +218,7 @@
 
       g.innerHTML = ''; // 描いた図形を消去。
 
-      // 分子（縦線）
+      // 縦線（分子）に注目
       if (pid == processId) highlightTextSvgElem(elemNumer);
       g.appendChild(polygon);
       {
@@ -226,7 +227,7 @@
         line.setAttribute('stroke-width', '3');
         g.appendChild(line);
 
-        const text = createText({x: points[1][0] + 7, y: (points[1][1] + points[2][1]) / 2, text: numer});
+        const text = createText({x: points[1][0] + 8, y: (points[1][1] + points[2][1]) / 2, text: numer});
         text.setAttribute('font-size', fontSize);
         text.setAttribute('font-weight', 'bold');
         text.setAttribute('fill', 'red');
@@ -238,7 +239,7 @@
 
       g.innerHTML = ''; // 描いた図形を消去。
 
-      // 三角形を描画
+      // 三角形を回転
       {
         const num = speedLevelToNum(speedLevel);
         for (let i = 0; i <= num; ++i) {
@@ -253,6 +254,8 @@
       if (pid == processId) elemFraction.setAttribute('fill', '#dff');
       radian += atan;
     }
+    if (pid == processId) await sleep(intervalTime * 2);
+
     for (const fraction of fractions) {
       const numer = fraction.numer;
       const denom = fraction.denom;
@@ -265,7 +268,6 @@
       window.console.warn('Low precision.'); // eslint-disable-line no-console
     }
     // window.console.log(`${pi} * 2`); // eslint-disable-line no-console
-    if (pid == processId) await sleep(intervalTime * 3);
   }
 
   function highlightTextSvgElem(elem) {
