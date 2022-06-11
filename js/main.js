@@ -28,7 +28,7 @@
   let elems = {};
   let data = [];
 
-  const defaultSpeedLevel = 3;
+  const defaultSpeedLevel = 2;
   const minSpeedLevel = 1;
   const maxSpeedLevel = 10;
   let processId = 0;
@@ -190,7 +190,14 @@
       const elemNumer = document.getElementById(numer);
       const elemDenom = document.getElementById(denom);
 
+      const fontSize = '18px';
+
+      const polygon = createPolygon({points: points});
+      polygon.setAttribute('fill', 'yellow');
+      polygon.setAttribute('stroke', 'black');
+
       if (pid == processId) elemFraction.setAttribute('fill', 'yellow');
+      g.appendChild(polygon);
       // 分母（横線）
       if (pid == processId) highlightTextSvgElem(elemDenom);
       {
@@ -198,31 +205,38 @@
         line.setAttribute('stroke', 'red');
         line.setAttribute('stroke-width', '3');
         g.appendChild(line);
-        if (pid == processId) await sleep(intervalTime);
-        g.innerHTML = '';
-        line.setAttribute('stroke', 'black');
-        g.appendChild(line);
+
+        const text = createText({x: (points[0][0] + points[1][0]) / 2, y: points[0][1] + 15, text: denom});
+        text.setAttribute('font-size', fontSize);
+        text.setAttribute('font-weight', 'bold');
+        text.setAttribute('fill', 'red');
+        g.appendChild(text);
       }
+      if (pid == processId) await sleep(intervalTime);
       if (pid == processId) unhighlightTextSvgElem(elemDenom);
 
-      const polygon = createPolygon({points: points});
-      polygon.setAttribute('fill', 'yellow');
-      polygon.setAttribute('stroke', 'black');
-      g.appendChild(polygon);
+      g.innerHTML = ''; // 描いた図形を消去。
 
       // 分子（縦線）
       if (pid == processId) highlightTextSvgElem(elemNumer);
+      g.appendChild(polygon);
       {
         const line = createLine({x1: points[2][0], y1: points[2][1], x2: points[1][0], y2: points[1][1]});
         line.setAttribute('stroke', 'red');
         line.setAttribute('stroke-width', '3');
         g.appendChild(line);
+
+        const text = createText({x: points[1][0] + 7, y: (points[1][1] + points[2][1]) / 2, text: numer});
+        text.setAttribute('font-size', fontSize);
+        text.setAttribute('font-weight', 'bold');
+        text.setAttribute('fill', 'red');
+        text.setAttribute('text-anchor', 'start');
+        g.appendChild(text);
       }
       if (pid == processId) await sleep(intervalTime);
       if (pid == processId) unhighlightTextSvgElem(elemNumer);
 
-      // 描いた線を消去。
-      g.innerHTML = '';
+      g.innerHTML = ''; // 描いた図形を消去。
 
       // 三角形を描画
       {
@@ -234,9 +248,9 @@
           g.appendChild(polygon);
           if (pid == processId) await sleep(intervalTime / num);
         }
-        polygon.setAttribute('fill', 'skyblue');
+        polygon.setAttribute('fill', '#dff');
       }
-      if (pid == processId) elemFraction.setAttribute('fill', 'skyblue');
+      if (pid == processId) elemFraction.setAttribute('fill', '#dff');
       radian += atan;
     }
     for (const fraction of fractions) {
