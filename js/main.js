@@ -30,7 +30,7 @@
 
   const defaultSpeedLevel = 2;
   const minSpeedLevel = 1;
-  const maxSpeedLevel = 10;
+  const maxSpeedLevel = 9;
   let processId = 0;
   let speedLevel = defaultSpeedLevel;
   let intervalTime;
@@ -403,7 +403,7 @@
 
   function speedLevelToIntervalTime(speedLevel) {
     elems.speedInfo.innerText = '速度レベル: ' + '★'.repeat(speedLevel);
-    return 2 ** (maxSpeedLevel + 1 - speedLevel);
+    return 2 ** (11 - speedLevel);
   }
 
   function speedDown() {

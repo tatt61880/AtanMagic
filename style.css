@@ -68,7 +68,7 @@ th {
 }
 
 th, td {
-  border: 2px solid dodgerblue;
+  border: solid 2px dodgerblue;
   padding: 5px 10px;
 }
 
