@@ -75,6 +75,7 @@ th, td {
 blockquote {
   padding: 10px;
   background-color: #dff;
+  border: solid 4px #5dd;
 }
 
 g {
