@@ -258,6 +258,10 @@
 
     const precision = 15;
     const pi = (radian / 2).toPrecision(precision);
+    // atan(x)の和が2πになるかの確認。
+    // ※厳密に一致しているかのチェックにはなっていません。
+    //   厳密な検証に関しては、@hamukazuさんが検出用プログラムを公開しています。
+    //   https://twitter.com/hamukazu/status/1533726390629019648
     if (pi != Math.PI.toPrecision(precision)) {
       window.console.warn('Low precision.'); // eslint-disable-line no-console
     }
@@ -324,20 +328,34 @@
 
   function initData() {
     data = [];
-    {
-      let y = 0;
-      for (const line of dataStr.split('\n')) {
-        data[y] = [];
-        for (const num of line.split(',')) {
-          const ab = num.split('/');
-          const a = Number(ab[0]);
-          const b = Number(ab[1]);
-          if (gcd(a, b) != 1) {
-            window.console.error(`${a} と ${b} の最小公倍数は ${gcd(a, b)} です。`); // eslint-disable-line no-console
-          }
-          data[y].push({numer: a, denom: b});
+    let nums = {};
+
+    let y = 0;
+    for (const line of dataStr.split('\n')) {
+      data[y] = [];
+      for (const num of line.split(',')) {
+        const ab = num.split('/');
+        const a = Number(ab[0]);
+        const b = Number(ab[1]);
+        nums[a] = true;
+        nums[b] = true;
+        // 真分数であるかの確認。
+        if (a >= b) {
+          window.console.warn(`${a}/${b}は真分数ではありません。`); // eslint-disable-line no-console
         }
-        y++;
+        // 既約分数であるかの確認。
+        if (gcd(a, b) != 1) {
+          window.console.error(`${a} と ${b} の最小公倍数は ${gcd(a, b)} です。`); // eslint-disable-line no-console
+        }
+        data[y].push({numer: a, denom: b});
+      }
+      y++;
+    }
+
+    // 1～512が重複なく含まれているかの確認。
+    for (let i = 0; i < 512; ++i) {
+      if (nums[i + 1] === undefined) {
+        window.console.warn(`${i + 1}が含まれていません。`); // eslint-disable-line no-console
       }
     }
   }
