@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <title>AtanMagicの図示</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1000">
+
+  <meta name="description" content="TokusiNさんのAtanMagicを図示したものです。">
+  <meta property="og:title" content="AtanMagicの図示">
+  <meta property="og:description" content="TokusiNさんのAtanMagicを図示したものです。">
+
+  <link rel="icon" type="image/x-icon" href="./images/favicon.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="./images/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="./style.css?2022.06.12">
+
+  <script src="./js/main.js?2022.06.12"></script>
+</head>
+
+<body>
+<div id="contents">
+  <h1 style="top: -5px;">AtanMagicの図示 <span style="font-size: 12px;">[<span id="versionInfo">Version: xxxx.xx.xx</span>]</span> / @tatt61880</h1>
+  <svg id="svgBoard" width="1000" height="500">
+    <g id="result"></g>
+  </svg>
+
+  <div>
+    <a class="button">
+      <svg width="60" height="60" style="margin: 0 50px;">
+        <g id="buttonReload" class="button">
+          <circle cx="30" cy="30" r="28" fill="lightgreen" stroke="green" stroke-width="4" />
+          <path d="M 44 30 A 14 14 0 1 1 35 18" fill="none" stroke="green" stroke-width="4" />
+          <path d="M 31 10 L 42 21 L 27 24 Z" fill="green" stroke="none" stroke-width="4" />
+        </g>
+      </svg>
+    </a>
+    <a class="button">
+      <svg width="60" height="60">
+        <g id="buttonStart" class="button">
+          <circle cx="30" cy="30" r="28" fill="lightgreen" stroke="green" stroke-width="4" />
+          <path d="M 22 17 L 43 30 L 22 43 Z" fill="green" stroke="none" stroke-width="4" />
+        </g>
+      </svg>
+    </a>
+
+    <a class="button">
+      <svg width="60" height="60">
+        <g id="buttonSpeedDown" class="button">
+          <circle cx="30" cy="30" r="28" fill="gold" stroke="darkorange" stroke-width="4" />
+          <path d="M 20 17 L 30 32 L 40 17 Z" fill="darkorange" stroke="none" stroke-width="4" />
+          <path d="M 20 32 L 30 47 L 40 32 Z" fill="darkorange" stroke="none" stroke-width="4" />
+        </g>
+      </svg>
+    </a>
+    <a class="button">
+      <svg width="60" height="60">
+        <g id="buttonSpeedUp" class="button">
+          <circle cx="30" cy="30" r="28" fill="gold" stroke="darkorange" stroke-width="4" />
+          <path d="M 20 43 L 30 28 L 40 43 Z" fill="darkorange" stroke="none" stroke-width="4" />
+          <path d="M 20 28 L 30 13 L 40 28 Z" fill="darkorange" stroke="none" stroke-width="4" />
+        </g>
+      </svg>
+    </a>
+  </div>
+  <div style="margin: 10px;">
+    <span id="speedInfo" style="margin: 10px; padding: 5px 10px; background-color: orange; font-weight: bold;"></span>
+  </div>
+
+  <h1>これは何？</h1>
+  <p>
+    <a href="https://twitter.com/toku51n">TokusiNさん (@toku51n)</a>が作成した凄い魔方陣の性質を図示化したものです。<br>
+    <blockquote cite="https://twitter.com/toku51n/status/1533401499983749121" style="width: 500px; margin: auto;">
+      <span>
+        凄い魔方陣が出来てしまった。<br>
+        使われている数字は1～512を重複なしで1回ずつ、全て既約真分数。<br>
+        全てのマス目をatan(x)してから足すと、縦横斜めが全て2πになる。<br>
+      </span>
+
+      <span style="font-weight: bold;">
+        [引用元: <a href="https://twitter.com/toku51n/status/1533401499983749121">TokusiNさんのツイート</a>]
+      </span>
+    </blockquote>
+  </p>
+
+  <h1>ショートカットキー</h1>
+  <table style="margin: 10px auto 20px;">
+    <tr>
+      <th>キー</th>
+      <th>操作</th>
+    </tr>
+    <tr>
+      <td>Space</td>
+      <td>再生開始</td>
+    </tr>
+    <tr>
+      <td>r</td>
+      <td>リセット</td>
+    </tr>
+    <tr>
+      <td>Shift + ↑</td>
+      <td>速度レベルアップ</td>
+    </tr>
+    <tr>
+      <td>Shift + ↓</td>
+      <td>速度レベルダウン</td>
+    </tr>
+  </table>
+
+  <h1>このツールの作者</h1>
+  <p>
+    <a href="https://twitter.com/tatt61880">Tatt(たっと) @tatt61880</a><br>
+    要望などあれば、上記アカウントへどうぞ！<br>
+  </p>
+</div>
+</body>
+</html>

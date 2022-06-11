@@ -1,0 +1,86 @@
+html {
+  touch-action: manipulation;
+}
+
+body {
+  margin: 0px;
+}
+
+div.noselect {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#contents {
+  max-width: 1000px;
+  margin: auto;
+  padding: 0px;
+  text-align: center;
+}
+
+h1 {
+  position: relative;
+  margin: 5px;
+  font-size: 18px;
+  background-color: pink;
+}
+
+.button {
+  margin: 0 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.active-hover:active:hover {
+  filter: contrast(60%);
+}
+
+.stick {
+  cursor: pointer;
+  user-select: none;
+}
+
+svg {
+  margin: 0px;
+  padding: 0px;
+  user-select: none;
+}
+
+div.inner {
+  margin: 10px;
+}
+
+div.pink {
+  margin-bottom: 5px;
+  border: solid 5px pink;
+}
+
+text {
+  pointer-events: none;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  background-color: skyblue;
+}
+
+th, td {
+  border: 2px solid dodgerblue;
+  padding: 5px 10px;
+}
+
+blockquote {
+  padding: 10px;
+  background-color: #dff;
+}
+
+g {
+  user-select: none;
+}
+
+g.button {
+  cursor: pointer;
+}
