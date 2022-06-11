@@ -45,6 +45,8 @@
 
     document.getElementById('versionInfo').innerText = version;
     elems.svg = document.getElementById('svgBoard');
+    elems.result = document.getElementById('result');
+
     elems.reload = document.getElementById('buttonReload');
     elems.start = document.getElementById('buttonStart');
     elems.speedDown = document.getElementById('buttonSpeedDown');
@@ -119,6 +121,7 @@
     // 横
     for (let i = 0; i < 16; ++i) {
       await draw(data[i], pid);
+      if (pid != processId) return;
     }
     // 縦
     for (let i = 0; i < 16; ++i) {
@@ -127,6 +130,7 @@
         fractions.push(data[j][i]);
       }
       await draw(fractions, pid);
+      if (pid != processId) return;
     }
     // ＼
     {
@@ -135,6 +139,7 @@
         fractions.push(data[i][i]);
       }
       await draw(fractions, pid);
+      if (pid != processId) return;
     }
     // ／
     {
@@ -148,7 +153,7 @@
 
   const sleep = ms => new Promise(res => setTimeout(res, ms));
 
-  async function draw(fractions, pid) {
+  function resetElems() {
     for (const elem of document.getElementsByClassName('fraction')) {
       elem.setAttribute('fill', 'white');
     }
@@ -158,18 +163,21 @@
     for (const elem of document.getElementsByClassName('denom')) {
       unhighlightTextSvgElem(elem);
     }
+    elems.result.innerHTML = ''; // 描画済みの結果を消去します。
+  }
+
+  async function draw(fractions, pid) {
+    resetElems();
 
     const centerX = 750;
     const centerY = 250 + 5;
 
     let radian = 0;
-    const gResult = document.getElementById('result');
-    gResult.innerHTML = ''; // 過去の結果を消去します。
-    elems.svg.appendChild(gResult);
+    elems.svg.appendChild(elems.result);
     for (const fraction of fractions) {
       if (pid != processId) return;
       const g = createG();
-      gResult.appendChild(g);
+      elems.result.appendChild(g);
       const numer = fraction.numer;
       const denom = fraction.denom;
       const atan = Math.atan(numer / denom);
@@ -190,7 +198,7 @@
         line.setAttribute('stroke', 'red');
         line.setAttribute('stroke-width', '3');
         g.appendChild(line);
-        await sleep(intervalTime);
+        if (pid == processId) await sleep(intervalTime);
         g.innerHTML = '';
         line.setAttribute('stroke', 'black');
         g.appendChild(line);
@@ -210,7 +218,7 @@
         line.setAttribute('stroke-width', '3');
         g.appendChild(line);
       }
-      await sleep(intervalTime);
+      if (pid == processId) await sleep(intervalTime);
       if (pid == processId) unhighlightTextSvgElem(elemNumer);
 
       // 描いた線を消去。
@@ -224,7 +232,7 @@
           g.innerHTML = '';
           g.setAttribute('transform', `rotate(${deg} ${centerX} ${centerY})`);
           g.appendChild(polygon);
-          await sleep(intervalTime / num);
+          if (pid == processId) await sleep(intervalTime / num);
         }
         polygon.setAttribute('fill', 'skyblue');
       }
@@ -243,7 +251,7 @@
       window.console.warn('Low precision.'); // eslint-disable-line no-console
     }
     // window.console.log(`${pi} * 2`); // eslint-disable-line no-console
-    await sleep(intervalTime * 3);
+    if (pid == processId) await sleep(intervalTime * 3);
   }
 
   function highlightTextSvgElem(elem) {
@@ -329,6 +337,7 @@
   function reload() {
     isPlaying = false;
     processId++;
+    resetElems();
 
     hideElem(elems.reload);
     showElem(elems.start);
