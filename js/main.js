@@ -48,7 +48,8 @@
     elems.svg = document.getElementById('svgBoard');
     elems.result = document.getElementById('result');
 
-    elems.reload = document.getElementById('buttonReload');
+    elems.reset = document.getElementById('buttonReset');
+    elems.stop = document.getElementById('buttonStop');
     elems.start = document.getElementById('buttonStart');
     elems.speedDown = document.getElementById('buttonSpeedDown');
     elems.speedUp = document.getElementById('buttonSpeedUp');
@@ -56,12 +57,13 @@
 
     intervalTime = speedLevelToIntervalTime(speedLevel);
 
-    elems.reload.addEventListener('click', reload, false);
+    elems.reset.addEventListener('click', reset, false);
+    elems.stop.addEventListener('click', stop, false);
     elems.start.addEventListener('click', start, false);
     elems.speedDown.addEventListener('click', speedDown, false);
     elems.speedUp.addEventListener('click', speedUp, false);
 
-    hideElem(elems.reload);  
+    hideElem(elems.reset);  
 
     const size = 30;
     const offsetX = (500 - 30 * 16) / 2;
@@ -108,52 +110,13 @@
         elems.svg.appendChild(g);
       }
     }
-  }
 
-  async function start() {
-    if (isPlaying) return;
-    isPlaying = true;
-    showElem(elems.reload);  
-    hideElem(elems.start);  
-    processId = (processId + 1) % 1000000;
-
-    const pid = processId;
-    // 横
-    for (let i = 0; i < 16; ++i) {
-      await draw(data[i], pid);
-      if (pid != processId) return;
-    }
-    // 縦
-    for (let i = 0; i < 16; ++i) {
-      const fractions = [];
-      for (let j = 0; j < 16; ++j) {
-        fractions.push(data[j][i]);
-      }
-      await draw(fractions, pid);
-      if (pid != processId) return;
-    }
-    // ＼
-    {
-      const fractions = [];
-      for (let i = 0; i < 16; ++i) {
-        fractions.push(data[i][i]);
-      }
-      await draw(fractions, pid);
-      if (pid != processId) return;
-    }
-    // ／
-    {
-      const fractions = [];
-      for (let i = 0; i < 16; ++i) {
-        fractions.push(data[i][15 - i]);
-      }
-      await draw(fractions, pid);
-    }
+    reset();
   }
 
   const sleep = ms => new Promise(res => setTimeout(res, ms));
 
-  function resetElems() {
+  function resetMainSvg() {
     for (const elem of document.getElementsByClassName('fraction')) {
       elem.setAttribute('fill', 'white');
     }
@@ -167,7 +130,8 @@
   }
 
   async function draw(fractions, pid) {
-    resetElems();
+    resetMainSvg();
+    while (!isPlaying) await sleep(50);
 
     const centerX = 750;
     const centerY = 250 + 5;
@@ -224,6 +188,7 @@
         textDenom.setAttribute('fill', 'red');
       }
       if (pid == processId) await sleep(intervalTime);
+      while (!isPlaying) await sleep(50);
       if (pid == processId) unhighlightTextSvgElem(elemDenom);
       textDenom.setAttribute('fill', 'black');
 
@@ -243,6 +208,7 @@
         textNumer.setAttribute('fill', 'red');
       }
       if (pid == processId) await sleep(intervalTime);
+      while (!isPlaying) await sleep(50);
       if (pid == processId) unhighlightTextSvgElem(elemNumer);
       textNumer.setAttribute('fill', 'black');
 
@@ -261,6 +227,7 @@
             g.appendChild(textNumer);
           }
           if (pid == processId) await sleep(intervalTime / num);
+          while (!isPlaying) await sleep(50);
         }
         polygon.setAttribute('fill', '#dff');
       }
@@ -268,6 +235,7 @@
       radian += atan;
     }
     if (pid == processId) await sleep(intervalTime * 2);
+    while (!isPlaying) await sleep(50);
 
     const precision = 15;
     const pi = (radian / 2).toPrecision(precision);
@@ -377,15 +345,6 @@
     return `${numer}/${denom}`;
   }
 
-  function reload() {
-    isPlaying = false;
-    processId++;
-    resetElems();
-
-    hideElem(elems.reload);
-    showElem(elems.start);
-  }
-
   function speedLevelToNum(speedLevel) {
     switch (speedLevel) {
     case 0: return 50;
@@ -404,6 +363,63 @@
   function speedLevelToIntervalTime(speedLevel) {
     elems.speedInfo.innerText = '速度レベル: ' + '★'.repeat(speedLevel);
     return 2 ** (11 - speedLevel);
+  }
+
+  async function reset() {
+    isPlaying = false;
+    hideElem(elems.reset);
+    hideElem(elems.stop);
+    showElem(elems.start);
+    resetMainSvg();
+
+    processId = (processId + 1) % 1000000;
+    const pid = processId;
+    // 横
+    for (let i = 0; i < 16; ++i) {
+      await draw(data[i], pid);
+      if (pid != processId) return;
+    }
+    // 縦
+    for (let i = 0; i < 16; ++i) {
+      const fractions = [];
+      for (let j = 0; j < 16; ++j) {
+        fractions.push(data[j][i]);
+      }
+      await draw(fractions, pid);
+      if (pid != processId) return;
+    }
+    // ＼
+    {
+      const fractions = [];
+      for (let i = 0; i < 16; ++i) {
+        fractions.push(data[i][i]);
+      }
+      await draw(fractions, pid);
+      if (pid != processId) return;
+    }
+    // ／
+    {
+      const fractions = [];
+      for (let i = 0; i < 16; ++i) {
+        fractions.push(data[i][15 - i]);
+      }
+      await draw(fractions, pid);
+    }
+  }
+
+  function stop() {
+    if (!isPlaying) return;
+    isPlaying = false;
+    hideElem(elems.stop);  
+    showElem(elems.start);  
+  }
+
+  function start() {
+    if (isPlaying) return;
+    isPlaying = true;
+    showElem(elems.reset);  
+    showElem(elems.stop);  
+    hideElem(elems.start);  
   }
 
   function speedDown() {
@@ -432,10 +448,14 @@
 
   function keydown(e) {
     if (e.key == 'r') {
-      reload();
+      reset();
     } else if (e.key == ' ') {
       e.preventDefault();
-      start();
+      if (isPlaying) {
+        stop();
+      } else {
+        start();
+      }
     } else if (e.shiftKey){
       e.preventDefault();
       if (e.key == 'ArrowDown') {
