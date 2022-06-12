@@ -131,7 +131,7 @@
 
   async function draw(fractions, pid) {
     resetMainSvg();
-    while (!isPlaying) await sleep(50);
+    while (pid == processId && !isPlaying) await sleep(50);
 
     const centerX = 750;
     const centerY = 250 + 5;
@@ -188,7 +188,7 @@
         textDenom.setAttribute('fill', 'red');
       }
       if (pid == processId) await sleep(intervalTime);
-      while (!isPlaying) await sleep(50);
+      while (pid == processId && !isPlaying) await sleep(50);
       if (pid == processId) unhighlightTextSvgElem(elemDenom);
       textDenom.setAttribute('fill', 'black');
 
@@ -208,7 +208,7 @@
         textNumer.setAttribute('fill', 'red');
       }
       if (pid == processId) await sleep(intervalTime);
-      while (!isPlaying) await sleep(50);
+      while (pid == processId && !isPlaying) await sleep(50);
       if (pid == processId) unhighlightTextSvgElem(elemNumer);
       textNumer.setAttribute('fill', 'black');
 
@@ -227,7 +227,7 @@
             g.appendChild(textNumer);
           }
           if (pid == processId) await sleep(intervalTime / num);
-          while (!isPlaying) await sleep(50);
+          while (pid == processId && !isPlaying) await sleep(50);
         }
         polygon.setAttribute('fill', '#dff');
       }
@@ -235,7 +235,7 @@
       radian += atan;
     }
     if (pid == processId) await sleep(intervalTime * 2);
-    while (!isPlaying) await sleep(50);
+    while (pid == processId && !isPlaying) await sleep(50);
 
     const precision = 15;
     const pi = (radian / 2).toPrecision(precision);
