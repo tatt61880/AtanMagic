@@ -37,6 +37,10 @@
   let isPlaying = false;
   const smallFontSize = '9px';
 
+  const options = {
+    omit: undefined,
+  };
+
   window.addEventListener('load', init, false);
 
   async function init() {
@@ -64,6 +68,15 @@
     elems.speedUp.addEventListener('click', speedUp, false);
 
     hideElem(elems.reset);  
+
+    // オプションの初期化
+    for (const optionName in options) {
+      const elemOption = document.getElementById('options-' + optionName);
+      options[optionName] = elemOption.checked;
+      elemOption.addEventListener('change', function() {
+        options[optionName] = elemOption.checked;
+      }, false);
+    }
 
     const size = 30;
     const offsetX = (500 - 30 * 16) / 2;
@@ -174,64 +187,87 @@
 
       if (pid == processId) elemFraction.setAttribute('fill', 'yellow');
 
-      // 横線（分母）に注目
-      if (pid == processId) highlightTextSvgElem(elemDenom);
-      g.appendChild(polygon);
-      g.appendChild(textDenom);
-      g.appendChild(textNumer);
-      {
-        const line = createLine({x1: points[0][0], y1: points[0][1], x2: points[1][0], y2: points[1][1]});
-        line.setAttribute('stroke', 'red');
-        line.setAttribute('stroke-width', '3');
-        g.appendChild(line);
-
+      if (options.omit) {
+        if (pid == processId) highlightTextSvgElem(elemNumer);
+        if (pid == processId) highlightTextSvgElem(elemDenom);
         textDenom.setAttribute('fill', 'red');
-      }
-      if (pid == processId) await sleep(intervalTime);
-      while (pid == processId && !isPlaying) await sleep(50);
-      if (pid == processId) unhighlightTextSvgElem(elemDenom);
-      textDenom.setAttribute('fill', 'black');
-
-      g.innerHTML = ''; // 描いた図形を消去。
-
-      // 縦線（分子）に注目
-      if (pid == processId) highlightTextSvgElem(elemNumer);
-      g.appendChild(polygon);
-      g.appendChild(textDenom);
-      g.appendChild(textNumer);
-      {
-        const line = createLine({x1: points[2][0], y1: points[2][1], x2: points[1][0], y2: points[1][1]});
-        line.setAttribute('stroke', 'red');
-        line.setAttribute('stroke-width', '3');
-        g.appendChild(line);
-
         textNumer.setAttribute('fill', 'red');
-      }
-      if (pid == processId) await sleep(intervalTime);
-      while (pid == processId && !isPlaying) await sleep(50);
-      if (pid == processId) unhighlightTextSvgElem(elemNumer);
-      textNumer.setAttribute('fill', 'black');
+        const deg = -radian * 180 / Math.PI;
+        g.setAttribute('transform', `rotate(${deg} ${centerX} ${centerY})`);
+        g.appendChild(polygon);
+        g.appendChild(textDenom);
+        g.appendChild(textNumer);
+        if (pid == processId) await sleep(intervalTime);
+        while (pid == processId && !isPlaying) await sleep(50);
+        if (pid == processId) unhighlightTextSvgElem(elemNumer);
+        if (pid == processId) unhighlightTextSvgElem(elemDenom);
+        textDenom.setAttribute('fill', 'black');
+        textNumer.setAttribute('fill', 'black');
 
-      g.innerHTML = ''; // 描いた図形を消去。
-
-      // 三角形を回転
-      {
-        const num = Math.floor(intervalTime / 30) + 1;
-        for (let i = 0; i <= num; ++i) {
-          const deg = -radian * 180 / Math.PI * i / num;
-          g.innerHTML = '';
-          g.setAttribute('transform', `rotate(${deg} ${centerX} ${centerY})`);
-          g.appendChild(polygon);
-          if (i != num) {
-            g.appendChild(textDenom);
-            g.appendChild(textNumer);
-          }
-          if (pid == processId) await sleep(intervalTime / num);
-          while (pid == processId && !isPlaying) await sleep(50);
-        }
+        g.innerHTML = ''; // 描いた図形を消去。
+        g.appendChild(polygon);
         polygon.setAttribute('fill', '#dff');
+        if (pid == processId) elemFraction.setAttribute('fill', '#dff');
+      } else {
+        // 横線（分母）に注目
+        if (pid == processId) highlightTextSvgElem(elemDenom);
+        g.appendChild(polygon);
+        g.appendChild(textDenom);
+        g.appendChild(textNumer);
+        {
+          const line = createLine({x1: points[0][0], y1: points[0][1], x2: points[1][0], y2: points[1][1]});
+          line.setAttribute('stroke', 'red');
+          line.setAttribute('stroke-width', '3');
+          g.appendChild(line);
+
+          textDenom.setAttribute('fill', 'red');
+        }
+        if (pid == processId) await sleep(intervalTime);
+        while (pid == processId && !isPlaying) await sleep(50);
+        if (pid == processId) unhighlightTextSvgElem(elemDenom);
+        textDenom.setAttribute('fill', 'black');
+
+        g.innerHTML = ''; // 描いた図形を消去。
+
+        // 縦線（分子）に注目
+        if (pid == processId) highlightTextSvgElem(elemNumer);
+        g.appendChild(polygon);
+        g.appendChild(textDenom);
+        g.appendChild(textNumer);
+        {
+          const line = createLine({x1: points[2][0], y1: points[2][1], x2: points[1][0], y2: points[1][1]});
+          line.setAttribute('stroke', 'red');
+          line.setAttribute('stroke-width', '3');
+          g.appendChild(line);
+
+          textNumer.setAttribute('fill', 'red');
+        }
+        if (pid == processId) await sleep(intervalTime);
+        while (pid == processId && !isPlaying) await sleep(50);
+        if (pid == processId) unhighlightTextSvgElem(elemNumer);
+        textNumer.setAttribute('fill', 'black');
+
+        g.innerHTML = ''; // 描いた図形を消去。
+
+        // 三角形を回転
+        {
+          const num = Math.floor(intervalTime / 30) + 1;
+          for (let i = 0; i <= num; ++i) {
+            const deg = -radian * 180 / Math.PI * i / num;
+            g.innerHTML = '';
+            g.setAttribute('transform', `rotate(${deg} ${centerX} ${centerY})`);
+            g.appendChild(polygon);
+            if (i != num) {
+              g.appendChild(textDenom);
+              g.appendChild(textNumer);
+            }
+            if (pid == processId) await sleep(intervalTime / num);
+            while (pid == processId && !isPlaying) await sleep(50);
+          }
+          polygon.setAttribute('fill', '#dff');
+        }
+        if (pid == processId) elemFraction.setAttribute('fill', '#dff');
       }
-      if (pid == processId) elemFraction.setAttribute('fill', '#dff');
       radian += atan;
     }
     if (pid == processId) await sleep(intervalTime * 2);
