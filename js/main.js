@@ -68,15 +68,19 @@
     elems.speedDown.addEventListener('click', speedDown, false);
     elems.speedUp.addEventListener('click', speedUp, false);
 
-    hideElem(elems.reset);  
+    hideElem(elems.reset);
 
     // オプションの初期化
     for (const optionName in options) {
       const elemOption = document.getElementById('options-' + optionName);
       options[optionName] = elemOption.checked;
-      elemOption.addEventListener('change', function() {
-        options[optionName] = elemOption.checked;
-      }, false);
+      elemOption.addEventListener(
+        'change',
+        function() {
+          options[optionName] = elemOption.checked;
+        },
+        false
+      );
     }
 
     const size = 30;
@@ -89,7 +93,12 @@
 
         const g = createG();
         {
-          const rect = createRect({x: size * x + offsetX, y: size * y + offsetY, width: size, height: size});
+          const rect = createRect({
+            x: size * x + offsetX,
+            y: size * y + offsetY,
+            width: size,
+            height: size,
+          });
           rect.setAttribute('fill', 'white');
           rect.setAttribute('stroke', 'green');
           rect.setAttribute('stroke-width', '0.5');
@@ -101,21 +110,34 @@
           const xx = size * x + offsetX;
           const yy = size * y + offsetY;
           const margin = 5;
-          const line = createLine({x1: xx + margin, y1: yy + size / 2, x2: xx + size - margin, y2: yy + size / 2});
+          const line = createLine({
+            x1: xx + margin,
+            y1: yy + size / 2,
+            x2: xx + size - margin,
+            y2: yy + size / 2,
+          });
           line.setAttribute('stroke', 'black');
           line.setAttribute('stroke-width', '0.5');
           g.appendChild(line);
         }
 
         {
-          const text = createText({x: size * (x + 0.5) + offsetX, y: size * (y + 0.30) + offsetY, text: numer});
+          const text = createText({
+            x: size * (x + 0.5) + offsetX,
+            y: size * (y + 0.3) + offsetY,
+            text: numer,
+          });
           text.setAttribute('font-size', smallFontSize);
           text.setAttribute('id', numer);
           text.setAttribute('class', 'numer');
           g.appendChild(text);
         }
         {
-          const text = createText({x: size * (x + 0.51) + offsetX, y: size * (y + 0.77) + offsetY, text: denom});
+          const text = createText({
+            x: size * (x + 0.51) + offsetX,
+            y: size * (y + 0.77) + offsetY,
+            text: denom,
+          });
           text.setAttribute('font-size', smallFontSize);
           text.setAttribute('id', denom);
           text.setAttribute('class', 'denom');
@@ -187,26 +209,40 @@
       // window.console.log(`${numer} / ${denom}`); // eslint-disable-line no-console
 
       const ratio = 0.4;
-      const points = [[centerX, centerY], [centerX + denom * 0.4, centerY], [centerX + denom * ratio, centerY - numer * ratio]];
+      const points = [
+        [centerX, centerY],
+        [centerX + denom * 0.4, centerY],
+        [centerX + denom * ratio, centerY - numer * ratio],
+      ];
 
-      const elemFraction = document.getElementById(getFractionName(numer, denom));
+      const elemFraction = document.getElementById(
+        getFractionName(numer, denom)
+      );
       const elemNumer = document.getElementById(numer);
       const elemDenom = document.getElementById(denom);
 
       const fontSize = '18px';
 
       // 三角形
-      const polygon = createPolygon({points: points});
+      const polygon = createPolygon({ points: points });
       polygon.setAttribute('fill', 'yellow');
       polygon.setAttribute('stroke', 'black');
 
       // 分母のテキスト
-      const textDenom = createText({x: (points[0][0] + points[1][0]) / 2, y: points[0][1] + 16, text: denom});
+      const textDenom = createText({
+        x: (points[0][0] + points[1][0]) / 2,
+        y: points[0][1] + 16,
+        text: denom,
+      });
       textDenom.setAttribute('font-size', fontSize);
       textDenom.setAttribute('font-weight', 'bold');
 
       // 分子のテキスト
-      const textNumer = createText({x: points[1][0] + 8, y: (points[1][1] + points[2][1]) / 2, text: numer});
+      const textNumer = createText({
+        x: points[1][0] + 8,
+        y: (points[1][1] + points[2][1]) / 2,
+        text: numer,
+      });
       textNumer.setAttribute('font-size', fontSize);
       textNumer.setAttribute('font-weight', 'bold');
       textNumer.setAttribute('text-anchor', 'start');
@@ -242,7 +278,12 @@
         g.appendChild(textDenom);
         g.appendChild(textNumer);
         {
-          const line = createLine({x1: points[0][0], y1: points[0][1], x2: points[1][0], y2: points[1][1]});
+          const line = createLine({
+            x1: points[0][0],
+            y1: points[0][1],
+            x2: points[1][0],
+            y2: points[1][1],
+          });
           line.setAttribute('stroke', 'red');
           line.setAttribute('stroke-width', '3');
           g.appendChild(line);
@@ -262,7 +303,12 @@
         g.appendChild(textDenom);
         g.appendChild(textNumer);
         {
-          const line = createLine({x1: points[2][0], y1: points[2][1], x2: points[1][0], y2: points[1][1]});
+          const line = createLine({
+            x1: points[2][0],
+            y1: points[2][1],
+            x2: points[1][0],
+            y2: points[1][1],
+          });
           line.setAttribute('stroke', 'red');
           line.setAttribute('stroke-width', '3');
           g.appendChild(line);
@@ -391,9 +437,11 @@
         }
         // 既約分数であるかの確認。
         if (gcd(a, b) != 1) {
-          window.console.error(`${a} と ${b} の最小公倍数は ${gcd(a, b)} です。`); // eslint-disable-line no-console
+          window.console.error(
+            `${a} と ${b} の最小公倍数は ${gcd(a, b)} です。`
+          ); // eslint-disable-line no-console
         }
-        data[y].push({numer: a, denom: b});
+        data[y].push({ numer: a, denom: b });
       }
       y++;
     }
@@ -455,23 +503,23 @@
       }
       await draw(fractions, pid);
     }
-    hideElem(elems.stop);  
-    hideElem(elems.start);  
+    hideElem(elems.stop);
+    hideElem(elems.start);
   }
 
   function stop() {
     if (!isPlaying) return;
     isPlaying = false;
-    hideElem(elems.stop);  
-    showElem(elems.start);  
+    hideElem(elems.stop);
+    showElem(elems.start);
   }
 
   function start() {
     if (isPlaying) return;
     isPlaying = true;
-    showElem(elems.reset);  
-    showElem(elems.stop);  
-    hideElem(elems.start);  
+    showElem(elems.reset);
+    showElem(elems.stop);
+    hideElem(elems.start);
   }
 
   function speedDown() {
@@ -508,7 +556,7 @@
       } else {
         start();
       }
-    } else if (e.shiftKey){
+    } else if (e.shiftKey) {
       e.preventDefault();
       if (e.key == 'ArrowDown') {
         speedDown();
@@ -518,8 +566,8 @@
     }
   }
 
-  function gcd (x, y){
-    if (x % y){
+  function gcd(x, y) {
+    if (x % y) {
       return gcd(y, x % y);
     } else {
       return y;
