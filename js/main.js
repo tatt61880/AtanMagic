@@ -216,7 +216,7 @@
 
       // 三角形を回転
       {
-        const num = speedLevelToNum(speedLevel);
+        const num = Math.floor(intervalTime / 30) + 1;
         for (let i = 0; i <= num; ++i) {
           const deg = -radian * 180 / Math.PI * i / num;
           g.innerHTML = '';
@@ -345,21 +345,6 @@
     return `${numer}/${denom}`;
   }
 
-  function speedLevelToNum(speedLevel) {
-    switch (speedLevel) {
-    case 0: return 50;
-    case 1: return 50;
-    case 2: return 30;
-    case 3: return 20;
-    case 4: return 10;
-    case 5: return 8;
-    case 6: return 4;
-    case 7: return 2;
-    default:
-      return 1;
-    }
-  }
-
   function speedLevelToIntervalTime(speedLevel) {
     elems.speedInfo.innerText = '速度レベル: ' + '★'.repeat(speedLevel);
     return 2 ** (11 - speedLevel);
@@ -405,6 +390,8 @@
       }
       await draw(fractions, pid);
     }
+    hideElem(elems.stop);  
+    hideElem(elems.start);  
   }
 
   function stop() {
