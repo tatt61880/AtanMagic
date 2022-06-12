@@ -39,6 +39,7 @@
 
   const options = {
     omit: undefined,
+    colorful: undefined,
   };
 
   window.addEventListener('load', init, false);
@@ -142,6 +143,29 @@
     elems.result.innerHTML = ''; // 描画済みの結果を消去します。
   }
 
+  const colors = [
+    '#eddbff',
+    '#dbdbff',
+    '#dbedff',
+    '#dbffff',
+    '#dbffed',
+    '#dbffdb',
+    '#edffdb',
+    '#ffffdb',
+    '#eddbff',
+    '#dbdbff',
+    '#dbedff',
+    '#dbffff',
+    '#dbffed',
+    '#dbffdb',
+    '#edffdb',
+    '#ffffdb',
+  ];
+
+  function getFixedColor(i) {
+    return options.colorful ? colors[i] : '#dff';
+  }
+
   async function draw(fractions, pid) {
     resetMainSvg();
     while (pid == processId && !isPlaying) await sleep(50);
@@ -151,7 +175,9 @@
 
     let radian = 0;
     elems.svg.appendChild(elems.result);
+    let idx = -1;
     for (const fraction of fractions) {
+      idx++;
       if (pid != processId) return;
       const g = createG();
       elems.result.appendChild(g);
@@ -206,8 +232,9 @@
 
         g.innerHTML = ''; // 描いた図形を消去。
         g.appendChild(polygon);
-        polygon.setAttribute('fill', '#dff');
-        if (pid == processId) elemFraction.setAttribute('fill', '#dff');
+        const fixedColor = getFixedColor(idx);
+        polygon.setAttribute('fill', fixedColor);
+        if (pid == processId) elemFraction.setAttribute('fill', fixedColor);
       } else {
         // 横線（分母）に注目
         if (pid == processId) highlightTextSvgElem(elemDenom);
@@ -249,6 +276,7 @@
 
         g.innerHTML = ''; // 描いた図形を消去。
 
+        let fixedColor;
         // 三角形を回転
         {
           const num = Math.floor(intervalTime / 30) + 1;
@@ -264,9 +292,10 @@
             if (pid == processId) await sleep(intervalTime / num);
             while (pid == processId && !isPlaying) await sleep(50);
           }
-          polygon.setAttribute('fill', '#dff');
+          fixedColor = getFixedColor(idx);
+          polygon.setAttribute('fill', fixedColor);
         }
-        if (pid == processId) elemFraction.setAttribute('fill', '#dff');
+        if (pid == processId) elemFraction.setAttribute('fill', fixedColor);
       }
       radian += atan;
     }
