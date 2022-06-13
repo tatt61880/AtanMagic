@@ -215,16 +215,14 @@
         [centerX + denom * ratio, centerY - numer * ratio],
       ];
 
-      const elemFraction = document.getElementById(
-        getFractionName(numer, denom)
-      );
+      const elemFraction = document.getElementById(getFractionName(numer, denom));
       const elemNumer = document.getElementById(numer);
       const elemDenom = document.getElementById(denom);
 
       const fontSize = '18px';
 
       // 三角形
-      const polygon = createPolygon({ points: points });
+      const polygon = createPolygon({points: points});
       polygon.setAttribute('fill', 'yellow');
       polygon.setAttribute('stroke', 'black');
 
@@ -438,11 +436,9 @@
         }
         // 既約分数であるかの確認。
         if (gcd(a, b) != 1) {
-          window.console.error(
-            `${a} と ${b} の最小公倍数は ${gcd(a, b)} です。`
-          ); // eslint-disable-line no-console
+          window.console.error(`${a} と ${b} の最小公倍数は ${gcd(a, b)} です。`); // eslint-disable-line no-console
         }
-        data[y].push({ numer: a, denom: b });
+        data[y].push({numer: a, denom: b});
       }
       y++;
     }
