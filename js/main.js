@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  const version = 'Version: 2022.06.13';
+  const version = 'Version: 2022.06.26';
 
   // ※下記の「5/168,259/498,......」という値は、TokusiNさんが作成して公開してくださった魔方陣の生データです。
   // 関連URL:
@@ -35,6 +35,7 @@
   let speedLevel = defaultSpeedLevel;
   let intervalTime;
   let isPlaying = false;
+  let isFinished = false;
   const smallFontSize = '9px';
 
   const options = {
@@ -461,6 +462,7 @@
   }
 
   async function reset() {
+    isFinished = false;
     isPlaying = false;
     hideElem(elems.reset);
     hideElem(elems.stop);
@@ -502,6 +504,7 @@
     }
     hideElem(elems.stop);
     hideElem(elems.start);
+    isFinished = true;
   }
 
   function stop() {
@@ -548,6 +551,7 @@
       reset();
     } else if (e.key == ' ') {
       e.preventDefault();
+      if (isFinished) return;
       if (isPlaying) {
         stop();
       } else {
