@@ -3,18 +3,17 @@ html {
 }
 
 body {
-  margin: 0px;
+  margin: 0;
 }
 
 div.noselect {
   user-select: none;
-  -webkit-user-select: none;
 }
 
 #contents {
   max-width: 1000px;
   margin: auto;
-  padding: 0px;
+  padding: 0;
   text-align: center;
 }
 
@@ -39,8 +38,8 @@ a.button {
 }
 
 svg {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   user-select: none;
 }
 
@@ -65,7 +64,8 @@ th {
   background-color: #aef;
 }
 
-th, td {
+th,
+td {
   border: solid 2px dodgerblue;
   padding: 5px 20px;
 }
