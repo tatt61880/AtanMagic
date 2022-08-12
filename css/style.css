@@ -61,7 +61,7 @@ table {
 }
 
 th {
-  background-color: #aef;
+  background-color: #aaeeff;
 }
 
 th,
@@ -72,8 +72,8 @@ td {
 
 blockquote {
   padding: 10px;
-  background-color: #dff;
-  border: solid 4px #5dd;
+  background-color: #ddffff;
+  border: solid 4px #55dddd;
 }
 
 g {
