@@ -15,11 +15,20 @@ body {
   background-color: white;
 }
 
+div {
+  padding-bottom: 5px;
+}
+
 h1 {
   position: relative;
   margin: 0;
   font-size: 1.2rem;
   background-color: pink;
+}
+
+#version-info {
+  font-size: 0.9rem;
+  color: gray;
 }
 
 svg {
@@ -33,7 +42,9 @@ a.button {
 }
 
 table {
+  margin: 10px auto 5px;
   border-collapse: collapse;
+  font-size: 20px;
 }
 
 th {
@@ -47,7 +58,7 @@ td {
 }
 
 blockquote {
-  padding: 10px;
+  padding: 5px;
   background-color: #ddffff;
   border: solid 4px #55dddd;
 }

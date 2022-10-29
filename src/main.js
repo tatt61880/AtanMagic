@@ -50,7 +50,7 @@
 
     initData();
 
-    document.getElementById('versionInfo').innerText = version;
+    document.getElementById('version-info').innerText = version;
     elems.svg = document.getElementById('svgBoard');
     elems.result = document.getElementById('result');
 
