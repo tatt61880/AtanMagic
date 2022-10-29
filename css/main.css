@@ -4,37 +4,22 @@ html {
 
 body {
   margin: 0;
-}
-
-div.noselect {
-  user-select: none;
+  background-color: #ccffff;
 }
 
 #contents {
   max-width: 1000px;
-  margin: auto;
+  margin: 0 auto;
   padding: 0;
   text-align: center;
+  background-color: white;
 }
 
 h1 {
   position: relative;
-  margin: 5px;
-  font-size: 18px;
+  margin: 0;
+  font-size: 1.2rem;
   background-color: pink;
-}
-
-a.button {
-  margin: 0 25px;
-}
-
-.active-hover:active:hover {
-  filter: contrast(60%);
-}
-
-.stick {
-  cursor: pointer;
-  user-select: none;
 }
 
 svg {
@@ -43,17 +28,8 @@ svg {
   user-select: none;
 }
 
-div.inner {
-  margin: 10px;
-}
-
-div.pink {
-  margin-bottom: 5px;
-  border: solid 5px pink;
-}
-
-text {
-  pointer-events: none;
+a.button {
+  margin: 0 25px;
 }
 
 table {

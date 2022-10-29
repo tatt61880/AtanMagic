@@ -29,6 +29,7 @@
     "no-unneeded-ternary": "error",
     "no-unexpected-multiline": "error",
     "no-var": "error",
+    "prefer-const": "error",
     "quotes": ["error", "single"],
     "semi": "error",
     "space-before-blocks": ["error", "always"],
@@ -37,6 +38,7 @@
     "space-infix-ops": "error"
   },
   "env": {
+    "browser": true,
     "es2021": true
   }
 }

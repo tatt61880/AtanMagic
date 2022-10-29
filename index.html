@@ -12,165 +12,171 @@
   <link rel="icon" type="image/x-icon" href="./images/favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png?2022.06.15">
 
-  <link rel="stylesheet" href="./css/style.css?2022.08.11">
+  <link rel="stylesheet" href="./css/main.css?2022.10.29">
 
-  <script src="./src/main.js?2022.08.11"></script>
+  <script src="./src/main.js?2022.10.29"></script>
 </head>
 
 <body>
 <div id="contents">
-  <h1 style="top: -5px;">AtanMagicの性質の図示 <span style="font-size: 12px;">[<span id="versionInfo">Version: xxxx.xx.xx</span>]</span> / @tatt61880</h1>
-  <svg id="svgBoard" width="1000" height="500">
-    <g id="result"></g>
-  </svg>
-
   <div>
-    <a class="button">
-      <svg width="120" height="120" style="margin: 0 90px;">
-        <g id="buttonReset" class="button" transform="scale(2.0 2.0)">
-          <circle cx="30" cy="30" r="28" fill="#faf" stroke="indigo" stroke-width="4" />
-          <path d="M 44 30 A 14 14 0 1 1 35 18" fill="none" stroke="indigo" stroke-width="4" />
-          <path d="M 31 10 L 42 21 L 27 24 Z" fill="indigo" stroke="none" stroke-width="4" />
-        </g>
-      </svg>
-    </a>
-    <a class="button">
-      <svg width="120" height="120">
-        <g id="buttonStop" class="button" transform="scale(2.0 2.0)" display="none">
-          <circle cx="30" cy="30" r="28" fill="lightgreen" stroke="green" stroke-width="4" />
-          <rect x="19" y="17" width="6" height="26" rx="3" ry="3" fill="green" />
-          <rect x="35" y="17" width="6" height="26" rx="3" ry="3" fill="green" />
-        </g>
-        <g id="buttonStart" class="button" transform="scale(2.0 2.0)">
-          <circle cx="30" cy="30" r="28" fill="lightgreen" stroke="green" stroke-width="4" />
-          <path d="M 22 17 L 43 30 L 22 43 Z" fill="green" stroke="none" stroke-width="4" />
-        </g>
-      </svg>
-    </a>
+    <h1>AtanMagicの性質の図示 <span style="font-size: 12px;">[<span id="versionInfo">Version: xxxx.xx.xx</span>]</span> / @tatt61880</h1>
+    <svg id="svgBoard" width="1000" height="500">
+      <g id="result"></g>
+    </svg>
 
-    <a class="button">
-      <svg width="120" height="120">
-        <g id="buttonSpeedDown" class="button" transform="scale(2.0 2.0)">
-          <circle cx="30" cy="30" r="28" fill="#ffa" stroke="darkorange" stroke-width="4" />
-          <path d="M 20 17 L 30 32 L 40 17 Z" fill="darkorange" stroke="none" stroke-width="4" />
-          <path d="M 20 32 L 30 47 L 40 32 Z" fill="darkorange" stroke="none" stroke-width="4" />
-        </g>
-      </svg>
-    </a>
-    <a class="button">
-      <svg width="120" height="120">
-        <g id="buttonSpeedUp" class="button" transform="scale(2.0 2.0)">
-          <circle cx="30" cy="30" r="28" fill="#ffa" stroke="darkorange" stroke-width="4" />
-          <path d="M 20 43 L 30 28 L 40 43 Z" fill="darkorange" stroke="none" stroke-width="4" />
-          <path d="M 20 28 L 30 13 L 40 28 Z" fill="darkorange" stroke="none" stroke-width="4" />
-        </g>
-      </svg>
-    </a>
-  </div>
-  <div style="margin: 20px 0 30px;">
-    <span id="speedInfo" style="margin: 10px; padding: 5px 20px; border: solid 5px darkorange; background-color: #ffa; color: darkorange; font-size: 30px; font-weight: bold;"></span>
-  </div>
-  <div style="font-size: 30px;">
-    <input type="checkbox" id="options-omit" style="width: 30px; height: 30px;"> <label for="options-omit">回転省略</label><br>
-    <input type="checkbox" id="options-colorful" style="width: 30px; height: 30px;"> <label for="options-colorful">カラフル</label><br>
-  </div>
-
-  <h1>これは何？</h1>
-  <p style="margin: 7px;">
-    <a href="https://twitter.com/toku51n">TokusiNさん (@toku51n)</a>が作成した凄い魔方陣の性質の一部を図示したものです。<br>
-    分数から直角三角形を作り、atan(x)に相当する角度を足すと、<br>
-    縦横斜めのいずれも、360度（2πラジアン）になります。<br>
-    ページ名の「AtanMagic」は <a href="https://github.com/TokusiN/AtanMagic/blob/main/data.txt">TokusiNさんが公開した生データ</a> のリポジトリ名が由来です。
-  </p>
-  <blockquote cite="https://twitter.com/toku51n/status/1533401499983749121" style="width: 550px; margin: auto;">
-    <span>
-      凄い魔方陣が出来てしまった。<br>
-      使われている数字は1～512を重複なしで1回ずつ、全て既約真分数。<br>
-      全てのマス目をatan(x)してから足すと、縦横斜めが全て2πになる。<br>
-    </span>
-
-    <span style="font-weight: bold;">
-      [引用元: <a href="https://twitter.com/toku51n/status/1533401499983749121">TokusiNさんのツイート</a>]
-    </span>
-  </blockquote>
-
-  <h1>ショートカットキー</h1>
-  <table style="margin: 10px auto 20px; font-size: 20px;">
-    <tr>
-      <th>キー</th>
-      <th>動作</th>
-      <th>同じ動作をするボタン</th>
-    </tr>
-    <tr>
-      <td rowspan="2">スペース</td>
-      <td>再生</td>
-      <td>
-        <svg width="36" height="36" style="margin-top: 5px;">
-          <g transform="scale(0.6 0.6)">
-            <circle cx="30" cy="30" r="28" fill="lightgreen" stroke="green" stroke-width="4" />
-            <path d="M 22 17 L 43 30 L 22 43 Z" fill="green" stroke="none" stroke-width="4" />
-          </g>
-        </svg>
-      </td>
-    </tr>
-    <tr>
-      <td>停止</td>
-      <td>
-        <svg width="36" height="36" style="margin-top: 5px;">
-          <g transform="scale(0.6 0.6)">
-            <circle cx="30" cy="30" r="28" fill="lightgreen" stroke="green" stroke-width="4" />
-            <rect x="19" y="17" width="6" height="26" rx="3" ry="3" fill="green" />
-            <rect x="35" y="17" width="6" height="26" rx="3" ry="3" fill="green" />
-          </g>
-        </svg>
-      </td>
-    </tr>
-    <tr>
-      <td>r</td>
-      <td>リセット</td>
-      <td>
-        <svg width="36" height="36" style="margin-top: 5px;">
-          <g transform="scale(0.6 0.6)">
+    <div>
+      <a class="button">
+        <svg width="120" height="120" style="margin: 0 90px;">
+          <g id="buttonReset" class="button" transform="scale(2.0 2.0)">
             <circle cx="30" cy="30" r="28" fill="#faf" stroke="indigo" stroke-width="4" />
             <path d="M 44 30 A 14 14 0 1 1 35 18" fill="none" stroke="indigo" stroke-width="4" />
             <path d="M 31 10 L 42 21 L 27 24 Z" fill="indigo" stroke="none" stroke-width="4" />
           </g>
         </svg>
-      </td>
-    </tr>
-    <tr>
-      <td>Shift + ↑</td>
-      <td>速度レベルアップ</td>
-      <td>
-        <svg width="36" height="36" style="margin-top: 5px;">
-          <g transform="scale(0.6 0.6)">
-            <circle cx="30" cy="30" r="28" fill="#ffa" stroke="darkorange" stroke-width="4" />
-            <path d="M 20 43 L 30 28 L 40 43 Z" fill="darkorange" stroke="none" stroke-width="4" />
-            <path d="M 20 28 L 30 13 L 40 28 Z" fill="darkorange" stroke="none" stroke-width="4" />
+      </a>
+      <a class="button">
+        <svg width="120" height="120">
+          <g id="buttonStop" class="button" transform="scale(2.0 2.0)" display="none">
+            <circle cx="30" cy="30" r="28" fill="lightgreen" stroke="green" stroke-width="4" />
+            <rect x="19" y="17" width="6" height="26" rx="3" ry="3" fill="green" />
+            <rect x="35" y="17" width="6" height="26" rx="3" ry="3" fill="green" />
+          </g>
+          <g id="buttonStart" class="button" transform="scale(2.0 2.0)">
+            <circle cx="30" cy="30" r="28" fill="lightgreen" stroke="green" stroke-width="4" />
+            <path d="M 22 17 L 43 30 L 22 43 Z" fill="green" stroke="none" stroke-width="4" />
           </g>
         </svg>
-      </td>
-    </tr>
-    <tr>
-      <td>Shift + ↓</td>
-      <td>速度レベルダウン</td>
-      <td>
-        <svg width="36" height="36" style="margin-top: 5px;">
-          <g transform="scale(0.6 0.6)">
+      </a>
+
+      <a class="button">
+        <svg width="120" height="120">
+          <g id="buttonSpeedDown" class="button" transform="scale(2.0 2.0)">
             <circle cx="30" cy="30" r="28" fill="#ffa" stroke="darkorange" stroke-width="4" />
             <path d="M 20 17 L 30 32 L 40 17 Z" fill="darkorange" stroke="none" stroke-width="4" />
             <path d="M 20 32 L 30 47 L 40 32 Z" fill="darkorange" stroke="none" stroke-width="4" />
           </g>
         </svg>
-      </td>
-    </tr>
-  </table>
+      </a>
+      <a class="button">
+        <svg width="120" height="120">
+          <g id="buttonSpeedUp" class="button" transform="scale(2.0 2.0)">
+            <circle cx="30" cy="30" r="28" fill="#ffa" stroke="darkorange" stroke-width="4" />
+            <path d="M 20 43 L 30 28 L 40 43 Z" fill="darkorange" stroke="none" stroke-width="4" />
+            <path d="M 20 28 L 30 13 L 40 28 Z" fill="darkorange" stroke="none" stroke-width="4" />
+          </g>
+        </svg>
+      </a>
+    </div>
+    <div style="margin: 20px 0 30px;">
+      <span id="speedInfo" style="margin: 10px; padding: 5px 20px; border: solid 5px darkorange; background-color: #ffa; color: darkorange; font-size: 30px; font-weight: bold;"></span>
+    </div>
+    <div style="font-size: 30px;">
+      <input type="checkbox" id="options-omit" style="width: 30px; height: 30px;"> <label for="options-omit">回転省略</label><br>
+      <input type="checkbox" id="options-colorful" style="width: 30px; height: 30px;"> <label for="options-colorful">カラフル</label><br>
+    </div>
+  </div>
 
-  <h1>このツールの作者</h1>
-  <p>
+  <div>
+    <h1>これは何？</h1>
+    <p style="margin: 7px;">
+      <a href="https://twitter.com/toku51n">TokusiNさん (@toku51n)</a>が作成した凄い魔方陣の性質の一部を図示したものです。<br>
+      分数から直角三角形を作り、atan(x)に相当する角度を足すと、<br>
+      縦横斜めのいずれも、360度（2πラジアン）になります。<br>
+      ページ名の「AtanMagic」は <a href="https://github.com/TokusiN/AtanMagic/blob/main/data.txt">TokusiNさんが公開した生データ</a> のリポジトリ名が由来です。
+    </p>
+    <blockquote cite="https://twitter.com/toku51n/status/1533401499983749121" style="width: 550px; margin: auto;">
+      <span>
+        凄い魔方陣が出来てしまった。<br>
+        使われている数字は1～512を重複なしで1回ずつ、全て既約真分数。<br>
+        全てのマス目をatan(x)してから足すと、縦横斜めが全て2πになる。<br>
+      </span>
+
+      <span style="font-weight: bold;">
+        [引用元: <a href="https://twitter.com/toku51n/status/1533401499983749121">TokusiNさんのツイート</a>]
+      </span>
+    </blockquote>
+  </div>
+
+  <div>
+    <h1>ショートカットキー</h1>
+    <table style="margin: 10px auto 20px; font-size: 20px;">
+      <tr>
+        <th>キー</th>
+        <th>動作</th>
+        <th>同じ動作をするボタン</th>
+      </tr>
+      <tr>
+        <td rowspan="2">スペース</td>
+        <td>再生</td>
+        <td>
+          <svg width="36" height="36" style="margin-top: 5px;">
+            <g transform="scale(0.6 0.6)">
+              <circle cx="30" cy="30" r="28" fill="lightgreen" stroke="green" stroke-width="4" />
+              <path d="M 22 17 L 43 30 L 22 43 Z" fill="green" stroke="none" stroke-width="4" />
+            </g>
+          </svg>
+        </td>
+      </tr>
+      <tr>
+        <td>停止</td>
+        <td>
+          <svg width="36" height="36" style="margin-top: 5px;">
+            <g transform="scale(0.6 0.6)">
+              <circle cx="30" cy="30" r="28" fill="lightgreen" stroke="green" stroke-width="4" />
+              <rect x="19" y="17" width="6" height="26" rx="3" ry="3" fill="green" />
+              <rect x="35" y="17" width="6" height="26" rx="3" ry="3" fill="green" />
+            </g>
+          </svg>
+        </td>
+      </tr>
+      <tr>
+        <td>r</td>
+        <td>リセット</td>
+        <td>
+          <svg width="36" height="36" style="margin-top: 5px;">
+            <g transform="scale(0.6 0.6)">
+              <circle cx="30" cy="30" r="28" fill="#faf" stroke="indigo" stroke-width="4" />
+              <path d="M 44 30 A 14 14 0 1 1 35 18" fill="none" stroke="indigo" stroke-width="4" />
+              <path d="M 31 10 L 42 21 L 27 24 Z" fill="indigo" stroke="none" stroke-width="4" />
+            </g>
+          </svg>
+        </td>
+      </tr>
+      <tr>
+        <td>Shift + ↑</td>
+        <td>速度レベルアップ</td>
+        <td>
+          <svg width="36" height="36" style="margin-top: 5px;">
+            <g transform="scale(0.6 0.6)">
+              <circle cx="30" cy="30" r="28" fill="#ffa" stroke="darkorange" stroke-width="4" />
+              <path d="M 20 43 L 30 28 L 40 43 Z" fill="darkorange" stroke="none" stroke-width="4" />
+              <path d="M 20 28 L 30 13 L 40 28 Z" fill="darkorange" stroke="none" stroke-width="4" />
+            </g>
+          </svg>
+        </td>
+      </tr>
+      <tr>
+        <td>Shift + ↓</td>
+        <td>速度レベルダウン</td>
+        <td>
+          <svg width="36" height="36" style="margin-top: 5px;">
+            <g transform="scale(0.6 0.6)">
+              <circle cx="30" cy="30" r="28" fill="#ffa" stroke="darkorange" stroke-width="4" />
+              <path d="M 20 17 L 30 32 L 40 17 Z" fill="darkorange" stroke="none" stroke-width="4" />
+              <path d="M 20 32 L 30 47 L 40 32 Z" fill="darkorange" stroke="none" stroke-width="4" />
+            </g>
+          </svg>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div>
+    <h1>このツールの作者</h1>
     <a href="https://twitter.com/tatt61880">Tatt(たっと) @tatt61880</a><br>
     要望などあれば、上記アカウントへどうぞ！<br>
-  </p>
+  </div>
 </div>
 </body>
 </html>

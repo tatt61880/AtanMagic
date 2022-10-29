@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  const version = 'Version: 2022.06.26';
+  const version = 'Version: 2022.10.29';
 
   // ※下記の「5/168,259/498,......」という値は、TokusiNさんが作成して公開してくださった魔方陣の生データです。
   // 関連URL:
@@ -25,7 +25,7 @@
 76/393,372/421,61/312,19/458,25/308,139/276,201/464,160/189,280/359,194/383,140/491,66/137,24/317,177/322,152/235,164/327`;
 
   const SVG_NS = 'http://www.w3.org/2000/svg';
-  let elems = {};
+  const elems = {};
   let data = [];
 
   const defaultSpeedLevel = 2;
@@ -420,7 +420,7 @@
 
   function initData() {
     data = [];
-    let nums = {};
+    const nums = {};
 
     let y = 0;
     for (const line of dataStr.split('\n')) {
