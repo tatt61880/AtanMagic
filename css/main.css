@@ -9,8 +9,8 @@ body {
 
 #contents {
   max-width: 1000px;
-  margin: 0 auto;
   padding: 0;
+  margin: 0 auto;
   text-align: center;
   background-color: white;
 }
@@ -27,14 +27,14 @@ h1 {
 }
 
 #version-info {
-  color: gray;
-  font-weight: bold;
   font-size: 0.9rem;
+  font-weight: bold;
+  color: gray;
 }
 
 svg {
-  margin: 0;
   padding: 0;
+  margin: 0;
   user-select: none;
 }
 
@@ -44,8 +44,8 @@ a.button {
 
 table {
   margin: 10px auto 5px;
-  border-collapse: collapse;
   font-size: 20px;
+  border-collapse: collapse;
 }
 
 th {
@@ -54,8 +54,8 @@ th {
 
 th,
 td {
-  border: solid 2px dodgerblue;
   padding: 5px 20px;
+  border: solid 2px dodgerblue;
 }
 
 blockquote {
