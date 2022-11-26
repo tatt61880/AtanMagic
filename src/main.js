@@ -191,7 +191,7 @@
 
   async function draw(fractions, pid) {
     resetMainSvg();
-    while (pid == processId && !isPlaying) await sleep(50);
+    while (pid === processId && !isPlaying) await sleep(50);
 
     const centerX = 750;
     const centerY = 250 + 5;
@@ -201,7 +201,7 @@
     let idx = -1;
     for (const fraction of fractions) {
       idx++;
-      if (pid != processId) return;
+      if (pid !== processId) return;
       const g = createG();
       elems.result.appendChild(g);
       const numer = fraction.numer;
@@ -246,11 +246,11 @@
       textNumer.setAttribute('font-weight', 'bold');
       textNumer.setAttribute('text-anchor', 'start');
 
-      if (pid == processId) elemFraction.setAttribute('fill', 'yellow');
+      if (pid === processId) elemFraction.setAttribute('fill', 'yellow');
 
       if (options.omit) {
-        if (pid == processId) highlightTextSvgElem(elemNumer);
-        if (pid == processId) highlightTextSvgElem(elemDenom);
+        if (pid === processId) highlightTextSvgElem(elemNumer);
+        if (pid === processId) highlightTextSvgElem(elemDenom);
         textDenom.setAttribute('fill', 'red');
         textNumer.setAttribute('fill', 'red');
         const deg = -radian * 180 / Math.PI;
@@ -258,10 +258,10 @@
         g.appendChild(polygon);
         g.appendChild(textDenom);
         g.appendChild(textNumer);
-        if (pid == processId) await sleep(intervalTime);
-        while (pid == processId && !isPlaying) await sleep(50);
-        if (pid == processId) unhighlightTextSvgElem(elemNumer);
-        if (pid == processId) unhighlightTextSvgElem(elemDenom);
+        if (pid === processId) await sleep(intervalTime);
+        while (pid === processId && !isPlaying) await sleep(50);
+        if (pid === processId) unhighlightTextSvgElem(elemNumer);
+        if (pid === processId) unhighlightTextSvgElem(elemDenom);
         textDenom.setAttribute('fill', 'black');
         textNumer.setAttribute('fill', 'black');
 
@@ -270,10 +270,10 @@
         g.appendChild(polygon);
         const fixedColor = getFixedColor(idx);
         polygon.setAttribute('fill', fixedColor);
-        if (pid == processId) elemFraction.setAttribute('fill', fixedColor);
+        if (pid === processId) elemFraction.setAttribute('fill', fixedColor);
       } else {
         // 横線（分母）に注目
-        if (pid == processId) highlightTextSvgElem(elemDenom);
+        if (pid === processId) highlightTextSvgElem(elemDenom);
         g.appendChild(polygon);
         g.appendChild(textDenom);
         g.appendChild(textNumer);
@@ -290,15 +290,15 @@
 
           textDenom.setAttribute('fill', 'red');
         }
-        if (pid == processId) await sleep(intervalTime);
-        while (pid == processId && !isPlaying) await sleep(50);
-        if (pid == processId) unhighlightTextSvgElem(elemDenom);
+        if (pid === processId) await sleep(intervalTime);
+        while (pid === processId && !isPlaying) await sleep(50);
+        if (pid === processId) unhighlightTextSvgElem(elemDenom);
         textDenom.setAttribute('fill', 'black');
 
         g.innerHTML = ''; // 描いた図形を消去。
 
         // 縦線（分子）に注目
-        if (pid == processId) highlightTextSvgElem(elemNumer);
+        if (pid === processId) highlightTextSvgElem(elemNumer);
         g.appendChild(polygon);
         g.appendChild(textDenom);
         g.appendChild(textNumer);
@@ -315,9 +315,9 @@
 
           textNumer.setAttribute('fill', 'red');
         }
-        if (pid == processId) await sleep(intervalTime);
-        while (pid == processId && !isPlaying) await sleep(50);
-        if (pid == processId) unhighlightTextSvgElem(elemNumer);
+        if (pid === processId) await sleep(intervalTime);
+        while (pid === processId && !isPlaying) await sleep(50);
+        if (pid === processId) unhighlightTextSvgElem(elemNumer);
         textNumer.setAttribute('fill', 'black');
 
         g.innerHTML = ''; // 描いた図形を消去。
@@ -331,22 +331,22 @@
             g.innerHTML = '';
             g.setAttribute('transform', `rotate(${deg} ${centerX} ${centerY})`);
             g.appendChild(polygon);
-            if (i != num) {
+            if (i !== num) {
               g.appendChild(textDenom);
               g.appendChild(textNumer);
             }
-            if (pid == processId) await sleep(intervalTime / num);
-            while (pid == processId && !isPlaying) await sleep(50);
+            if (pid === processId) await sleep(intervalTime / num);
+            while (pid === processId && !isPlaying) await sleep(50);
           }
           fixedColor = getFixedColor(idx);
           polygon.setAttribute('fill', fixedColor);
         }
-        if (pid == processId) elemFraction.setAttribute('fill', fixedColor);
+        if (pid === processId) elemFraction.setAttribute('fill', fixedColor);
       }
       radian += atan;
     }
-    if (pid == processId) await sleep(intervalTime * 2);
-    while (pid == processId && !isPlaying) await sleep(50);
+    if (pid === processId) await sleep(intervalTime * 2);
+    while (pid === processId && !isPlaying) await sleep(50);
 
     const precision = 15;
     const pi = (radian / 2).toPrecision(precision);
@@ -354,7 +354,7 @@
     // ※厳密に一致しているかのチェックにはなっていません。
     //   厳密な検証に関しては、@hamukazuさんが検出用プログラムを公開しています。
     //   https://twitter.com/hamukazu/status/1533726390629019648
-    if (pi != Math.PI.toPrecision(precision)) {
+    if (pi !== Math.PI.toPrecision(precision)) {
       window.console.warn('Low precision.'); // eslint-disable-line no-console
     }
     // window.console.log(`${pi} * 2`); // eslint-disable-line no-console
@@ -401,7 +401,7 @@
     const polygon = document.createElementNS(SVG_NS, 'polygon');
     let points = '';
     for (const point of param.points) {
-      if (points != '') points += ' ';
+      if (points !== '') points += ' ';
       points += `${point[0]},${point[1]}`;
     }
     polygon.setAttribute('points', points);
@@ -436,7 +436,7 @@
           window.console.warn(`${a}/${b}は真分数ではありません。`); // eslint-disable-line no-console
         }
         // 既約分数であるかの確認。
-        if (gcd(a, b) != 1) {
+        if (gcd(a, b) !== 1) {
           window.console.error(`${a} と ${b} の最小公倍数は ${gcd(a, b)} です。`); // eslint-disable-line no-console
         }
         data[y].push({numer: a, denom: b});
@@ -474,7 +474,7 @@
     // 横
     for (let i = 0; i < 16; ++i) {
       await draw(data[i], pid);
-      if (pid != processId) return;
+      if (pid !== processId) return;
     }
     // 縦
     for (let i = 0; i < 16; ++i) {
@@ -483,7 +483,7 @@
         fractions.push(data[j][i]);
       }
       await draw(fractions, pid);
-      if (pid != processId) return;
+      if (pid !== processId) return;
     }
     // ＼
     {
@@ -492,7 +492,7 @@
         fractions.push(data[i][i]);
       }
       await draw(fractions, pid);
-      if (pid != processId) return;
+      if (pid !== processId) return;
     }
     // ／
     {
@@ -523,33 +523,33 @@
   }
 
   function speedDown() {
-    if (speedLevel == minSpeedLevel) return;
+    if (speedLevel === minSpeedLevel) return;
     showElem(elems.speedUp);
     speedLevel--;
     intervalTime = speedLevelToIntervalTime(speedLevel);
 
-    if (speedLevel == minSpeedLevel) {
+    if (speedLevel === minSpeedLevel) {
       hideElem(elems.speedDown);
       return;
     }
   }
 
   function speedUp() {
-    if (speedLevel == maxSpeedLevel) return;
+    if (speedLevel === maxSpeedLevel) return;
     showElem(elems.speedDown);
     speedLevel++;
     intervalTime = speedLevelToIntervalTime(speedLevel);
 
-    if (speedLevel == maxSpeedLevel) {
+    if (speedLevel === maxSpeedLevel) {
       hideElem(elems.speedUp);
       return;
     }
   }
 
   function keydown(e) {
-    if (e.key == 'r') {
+    if (e.key === 'r') {
       reset();
-    } else if (e.key == ' ') {
+    } else if (e.key === ' ') {
       e.preventDefault();
       if (isFinished) return;
       if (isPlaying) {
@@ -559,9 +559,9 @@
       }
     } else if (e.shiftKey) {
       e.preventDefault();
-      if (e.key == 'ArrowDown') {
+      if (e.key === 'ArrowDown') {
         speedDown();
-      } else if (e.key == 'ArrowUp') {
+      } else if (e.key === 'ArrowUp') {
         speedUp();
       }
     }
