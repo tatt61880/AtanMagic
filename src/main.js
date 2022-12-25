@@ -223,7 +223,7 @@
       const fontSize = '18px';
 
       // 三角形
-      const polygon = createPolygon({points});
+      const polygon = createPolygon({ points });
       polygon.setAttribute('fill', 'yellow');
       polygon.setAttribute('stroke', 'black');
 
@@ -439,7 +439,7 @@
         if (gcd(a, b) !== 1) {
           console.error(`${a} と ${b} の最小公倍数は ${gcd(a, b)} です。`);
         }
-        data[y].push({numer: a, denom: b});
+        data[y].push({ numer: a, denom: b });
       }
       y++;
     }
