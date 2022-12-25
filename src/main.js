@@ -207,7 +207,7 @@
       const numer = fraction.numer;
       const denom = fraction.denom;
       const atan = Math.atan(numer / denom);
-      // window.console.log(`${numer} / ${denom}`); // eslint-disable-line no-console
+      // console.log(`${numer} / ${denom}`);
 
       const ratio = 0.4;
       const points = [
@@ -355,9 +355,9 @@
     //   厳密な検証に関しては、@hamukazuさんが検出用プログラムを公開しています。
     //   https://twitter.com/hamukazu/status/1533726390629019648
     if (pi !== Math.PI.toPrecision(precision)) {
-      window.console.warn('Low precision.'); // eslint-disable-line no-console
+      console.warn('Low precision.');
     }
-    // window.console.log(`${pi} * 2`); // eslint-disable-line no-console
+    // console.log(`${pi} * 2`);
   }
 
   function highlightTextSvgElem(elem) {
@@ -433,11 +433,11 @@
         nums[b] = true;
         // 真分数であるかの確認。
         if (a >= b) {
-          window.console.warn(`${a}/${b}は真分数ではありません。`); // eslint-disable-line no-console
+          console.warn(`${a}/${b}は真分数ではありません。`);
         }
         // 既約分数であるかの確認。
         if (gcd(a, b) !== 1) {
-          window.console.error(`${a} と ${b} の最小公倍数は ${gcd(a, b)} です。`); // eslint-disable-line no-console
+          console.error(`${a} と ${b} の最小公倍数は ${gcd(a, b)} です。`);
         }
         data[y].push({numer: a, denom: b});
       }
@@ -447,7 +447,7 @@
     // 1～512が重複なく含まれているかの確認。
     for (let i = 0; i < 512; ++i) {
       if (nums[i + 1] === undefined) {
-        window.console.warn(`${i + 1}が含まれていません。`); // eslint-disable-line no-console
+        console.warn(`${i + 1}が含まれていません。`);
       }
     }
   }
