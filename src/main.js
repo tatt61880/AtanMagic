@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
   const version = 'Version: 2022.10.29';
 
@@ -77,7 +77,7 @@
       options[optionName] = elemOption.checked;
       elemOption.addEventListener(
         'change',
-        function() {
+        function () {
           options[optionName] = elemOption.checked;
         },
         false
@@ -151,7 +151,7 @@
     reset();
   }
 
-  const sleep = ms => new Promise(res => setTimeout(res, ms));
+  const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
   function resetMainSvg() {
     for (const elem of document.getElementsByClassName('fraction')) {
@@ -223,7 +223,7 @@
       const fontSize = '18px';
 
       // 三角形
-      const polygon = createPolygon({points: points});
+      const polygon = createPolygon({points});
       polygon.setAttribute('fill', 'yellow');
       polygon.setAttribute('stroke', 'black');
 
