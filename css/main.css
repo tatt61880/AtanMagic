@@ -25,13 +25,14 @@ h1 {
   position: relative;
   margin: 0;
   font-size: 1.2rem;
-  background-color: pink;
+  color: #000055;
+  background-color: #c0cbff;
 }
 
 #version-info {
   font-size: 0.9rem;
   font-weight: bold;
-  color: gray;
+  color: #7777aa;
 }
 
 svg {
@@ -51,13 +52,14 @@ table {
 }
 
 th {
-  background-color: #aaeeff;
+  color: #000055;
+  background-color: #c0cbff;
 }
 
 th,
 td {
   padding: 5px 20px;
-  border: solid 2px dodgerblue;
+  border: solid 2px #000055;
 }
 
 blockquote {
