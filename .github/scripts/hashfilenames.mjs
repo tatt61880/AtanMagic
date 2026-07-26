@@ -34,12 +34,15 @@ function processHtml(filePath, mapping) {
   let html = fs.readFileSync(filePath, 'utf8');
 
   // src/href の値だけを置換対象にする（雑に全文置換しない）
-  html = html.replace(/\b(src|href)\s*=\s*(["'])([^"']+)\2/gi, (m, attr, quote, url) => {
-    // クエリ/ハッシュが付いている場合は分離して戻す
-    const [base, tail = ''] = url.split(/(?=[?#])/); // # or ? 以降を残す
-    const replaced = mapping.get(base) || base;
-    return `${attr}=${quote}${replaced}${tail}${quote}`;
-  });
+  html = html.replace(
+    /\b(src|href)\s*=\s*(["'])([^"']+)\2/gi,
+    (m, attr, quote, url) => {
+      // クエリ/ハッシュが付いている場合は分離して戻す
+      const [base, tail = ''] = url.split(/(?=[?#])/); // # or ? 以降を残す
+      const replaced = mapping.get(base) || base;
+      return `${attr}=${quote}${replaced}${tail}${quote}`;
+    }
+  );
 
   fs.writeFileSync(filePath, html, 'utf8');
 }
