@@ -216,7 +216,9 @@
         [centerX + denom * ratio, centerY - numer * ratio],
       ];
 
-      const elemFraction = document.getElementById(getFractionName(numer, denom));
+      const elemFraction = document.getElementById(
+        getFractionName(numer, denom)
+      );
       const elemNumer = document.getElementById(numer);
       const elemDenom = document.getElementById(denom);
 
@@ -253,7 +255,7 @@
         if (pid === processId) highlightTextSvgElem(elemDenom);
         textDenom.setAttribute('fill', 'red');
         textNumer.setAttribute('fill', 'red');
-        const deg = -radian * 180 / Math.PI;
+        const deg = (-radian * 180) / Math.PI;
         g.setAttribute('transform', `rotate(${deg} ${centerX} ${centerY})`);
         g.appendChild(polygon);
         g.appendChild(textDenom);
@@ -327,7 +329,7 @@
         {
           const num = Math.floor(intervalTime / 30) + 1;
           for (let i = 0; i <= num; ++i) {
-            const deg = -radian * 180 / Math.PI * i / num;
+            const deg = (((-radian * 180) / Math.PI) * i) / num;
             g.innerHTML = '';
             g.setAttribute('transform', `rotate(${deg} ${centerX} ${centerY})`);
             g.appendChild(polygon);
