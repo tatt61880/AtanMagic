@@ -1,188 +1,276 @@
 <!DOCTYPE html>
 <html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AtanMagicの性質の図示</title>
+    <meta
+      name="description"
+      content="TokusiNさんのAtanMagic。分数から作る直角三角形で、縦横斜めの角度の和が360度になる性質を図示します。"
+    />
+    <meta property="og:title" content="AtanMagicの性質の図示" />
+    <meta
+      property="og:description"
+      content="魔方陣の縦横斜め、どの16個を選んでも角度の和は360度。三角形を並べて確かめてみましょう。"
+    />
+    <link rel="icon" type="image/png" href="./images/favicon.png?2026.05.01" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./images/apple-touch-icon.png?2026.05.01"
+    />
+    <link rel="stylesheet" href="./css/main.css" />
+    <script defer src="./src/math.js"></script>
+    <script defer src="./src/main.js"></script>
+  </head>
 
-<head>
-  <title>AtanMagicの性質の図示</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=1000">
+  <body>
+    <main id="contents">
+      <header>
+        <h1>
+          AtanMagicの性質の図示 <span id="version-info">v2026.11.01</span>
+        </h1>
+        <p class="intro">分数を三角形に。16個の角度を足すと、ちょうど1周。</p>
+      </header>
+      <noscript
+        ><p class="notice">
+          このツールを使うには、JavaScriptを有効にしてください。
+        </p></noscript
+      >
+      <p id="error-message" class="notice" role="alert" hidden></p>
 
-  <meta name="description" content="TokusiNさんのAtanMagicの性質を図示したものです。">
-  <meta property="og:title" content="AtanMagicの性質の図示">
-  <meta property="og:description" content="TokusiNさんのAtanMagicの性質を図示したものです。">
-
-  <link rel="icon" type="image/x-icon" href="./images/favicon.png?2026.05.01">
-  <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png?2026.05.01">
-
-  <link rel="stylesheet" href="./css/main.css">
-
-  <script defer src="./src/main.js"></script>
-</head>
-
-<body>
-  <div id="contents">
-    <div>
-      <h1>AtanMagicの性質の図示 <span id="version-info">Version: xxxx.xx.xx</span></h1>
-      <svg id="svgBoard" width="1000" height="500">
-        <g id="result"></g>
-      </svg>
-
-      <div>
-        <a class="button">
-          <svg width="120" height="120" style="margin: 0 90px;">
-            <g id="buttonReset" class="button" transform="scale(2.0 2.0)">
-              <circle cx="30" cy="30" r="28" fill="#faf" stroke="indigo" stroke-width="4" />
-              <path d="M 44 30 A 14 14 0 1 1 35 18" fill="none" stroke="indigo" stroke-width="4" />
-              <path d="M 31 10 L 42 21 L 27 24 Z" fill="indigo" stroke="none" stroke-width="4" />
-            </g>
-          </svg>
-        </a>
-        <a class="button">
-          <svg width="120" height="120">
-            <g id="buttonStop" class="button" transform="scale(2.0 2.0)" display="none">
-              <circle cx="30" cy="30" r="28" fill="lightgreen" stroke="green" stroke-width="4" />
-              <rect x="19" y="17" width="6" height="26" rx="3" ry="3" fill="green" />
-              <rect x="35" y="17" width="6" height="26" rx="3" ry="3" fill="green" />
-            </g>
-            <g id="buttonStart" class="button" transform="scale(2.0 2.0)">
-              <circle cx="30" cy="30" r="28" fill="lightgreen" stroke="green" stroke-width="4" />
-              <path d="M 22 17 L 43 30 L 22 43 Z" fill="green" stroke="none" stroke-width="4" />
-            </g>
-          </svg>
-        </a>
-
-        <a class="button">
-          <svg width="120" height="120">
-            <g id="buttonSpeedDown" class="button" transform="scale(2.0 2.0)">
-              <circle cx="30" cy="30" r="28" fill="#ffa" stroke="darkorange" stroke-width="4" />
-              <path d="M 20 17 L 30 32 L 40 17 Z" fill="darkorange" stroke="none" stroke-width="4" />
-              <path d="M 20 32 L 30 47 L 40 32 Z" fill="darkorange" stroke="none" stroke-width="4" />
-            </g>
-          </svg>
-        </a>
-        <a class="button">
-          <svg width="120" height="120">
-            <g id="buttonSpeedUp" class="button" transform="scale(2.0 2.0)">
-              <circle cx="30" cy="30" r="28" fill="#ffa" stroke="darkorange" stroke-width="4" />
-              <path d="M 20 43 L 30 28 L 40 43 Z" fill="darkorange" stroke="none" stroke-width="4" />
-              <path d="M 20 28 L 30 13 L 40 28 Z" fill="darkorange" stroke="none" stroke-width="4" />
-            </g>
-          </svg>
-        </a>
-      </div>
-      <div style="margin: 20px 0 30px;">
-        <span id="speedInfo"
-          style="margin: 10px; padding: 5px 20px; border: solid 5px darkorange; background-color: #ffa; color: darkorange; font-size: 30px; font-weight: bold;"></span>
-      </div>
-      <div style="font-size: 30px;">
-        <input type="checkbox" id="options-omit" style="width: 30px; height: 30px;"> <label
-          for="options-omit">回転省略</label><br>
-        <input type="checkbox" id="options-colorful" style="width: 30px; height: 30px;"> <label
-          for="options-colorful">カラフル</label><br>
-      </div>
-    </div>
-
-    <div>
-      <h1>これは何？</h1>
-      <p style="margin: 7px;">
-        <a href="https://twitter.com/toku51n">TokusiNさん (@toku51n)</a>が作成した凄い魔方陣の性質の一部を図示したものです。<br>
-        分数から直角三角形を作り、atan(x)に相当する角度を足すと、<br>
-        縦横斜めのいずれも、360度（2πラジアン）になります。<br>
-        ページ名の「AtanMagic」は <a href="https://github.com/TokusiN/AtanMagic/blob/main/data.txt">TokusiNさんが公開した生データ</a>
-        のリポジトリ名が由来です。
-      </p>
-      <blockquote cite="https://twitter.com/toku51n/status/1533401499983749121" style="width: 550px; margin: auto;">
-        <span>
-          凄い魔方陣が出来てしまった。<br>
-          使われている数字は1～512を重複なしで1回ずつ、全て既約真分数。<br>
-          全てのマス目をatan(x)してから足すと、縦横斜めが全て2πになる。<br>
-        </span>
-
-        <span style="font-weight: bold;">
-          [引用元: <a href="https://twitter.com/toku51n/status/1533401499983749121">TokusiNさんのツイート</a>]
-        </span>
-      </blockquote>
-    </div>
-
-    <div>
-      <h1>ショートカットキー</h1>
-      <table>
-        <tr>
-          <th>キー</th>
-          <th>動作</th>
-          <th>同じ動作をするボタン</th>
-        </tr>
-        <tr>
-          <td rowspan="2">スペース</td>
-          <td>再生</td>
-          <td>
-            <svg width="36" height="36" style="margin-top: 5px;">
-              <g transform="scale(0.6 0.6)">
-                <circle cx="30" cy="30" r="28" fill="lightgreen" stroke="green" stroke-width="4" />
-                <path d="M 22 17 L 43 30 L 22 43 Z" fill="green" stroke="none" stroke-width="4" />
-              </g>
+      <section class="workspace" aria-label="魔方陣の図示">
+        <div class="visuals">
+          <section class="visual-panel">
+            <h2>16 × 16 の魔方陣</h2>
+            <div
+              class="board-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="魔方陣。狭い画面では左右にスクロールできます。"
+            >
+              <svg
+                id="svg-board"
+                viewBox="0 0 520 520"
+                width="520"
+                height="520"
+                role="img"
+                aria-labelledby="board-title board-description"
+              >
+                <title id="board-title">AtanMagicの魔方陣</title>
+                <desc id="board-description">
+                  選択中の行・列・対角線を青枠で、現在の分数を黄色で示します。各分数は下の一覧でも確認できます。
+                </desc>
+                <g id="board-cells"></g>
+              </svg>
+            </div>
+            <p class="board-hint">
+              青枠：選択中の並び　黄色：現在の分数<br /><span
+                class="scroll-note"
+                >魔方陣は左右にスクロールできます。</span
+              >
+            </p>
+          </section>
+          <section class="visual-panel">
+            <h2 id="drawing-title">横 1行目の三角形</h2>
+            <svg
+              id="triangleBoard"
+              viewBox="0 0 520 520"
+              width="520"
+              height="520"
+              role="img"
+              aria-labelledby="triangle-title triangle-description"
+            >
+              <title id="triangle-title">直角三角形の角度を足す図</title>
+              <desc id="triangle-description">
+                分母を横の辺、分子を縦の辺として三角形を作り、角度を順に足します。
+              </desc>
+              <circle class="guide-circle" cx="260" cy="260" r="215"></circle>
+              <path class="guide-axis" d="M 25 260 H 495 M 260 25 V 495"></path>
+              <g id="result"></g>
+              <circle cx="260" cy="260" r="3" fill="#000055"></circle>
             </svg>
-          </td>
-        </tr>
-        <tr>
-          <td>停止</td>
-          <td>
-            <svg width="36" height="36" style="margin-top: 5px;">
-              <g transform="scale(0.6 0.6)">
-                <circle cx="30" cy="30" r="28" fill="lightgreen" stroke="green" stroke-width="4" />
-                <rect x="19" y="17" width="6" height="26" rx="3" ry="3" fill="green" />
-                <rect x="35" y="17" width="6" height="26" rx="3" ry="3" fill="green" />
-              </g>
-            </svg>
-          </td>
-        </tr>
-        <tr>
-          <td>r</td>
-          <td>リセット</td>
-          <td>
-            <svg width="36" height="36" style="margin-top: 5px;">
-              <g transform="scale(0.6 0.6)">
-                <circle cx="30" cy="30" r="28" fill="#faf" stroke="indigo" stroke-width="4" />
-                <path d="M 44 30 A 14 14 0 1 1 35 18" fill="none" stroke="indigo" stroke-width="4" />
-                <path d="M 31 10 L 42 21 L 27 24 Z" fill="indigo" stroke="none" stroke-width="4" />
-              </g>
-            </svg>
-          </td>
-        </tr>
-        <tr>
-          <td>Shift + ↑</td>
-          <td>速度レベルアップ</td>
-          <td>
-            <svg width="36" height="36" style="margin-top: 5px;">
-              <g transform="scale(0.6 0.6)">
-                <circle cx="30" cy="30" r="28" fill="#ffa" stroke="darkorange" stroke-width="4" />
-                <path d="M 20 43 L 30 28 L 40 43 Z" fill="darkorange" stroke="none" stroke-width="4" />
-                <path d="M 20 28 L 30 13 L 40 28 Z" fill="darkorange" stroke="none" stroke-width="4" />
-              </g>
-            </svg>
-          </td>
-        </tr>
-        <tr>
-          <td>Shift + ↓</td>
-          <td>速度レベルダウン</td>
-          <td>
-            <svg width="36" height="36" style="margin-top: 5px;">
-              <g transform="scale(0.6 0.6)">
-                <circle cx="30" cy="30" r="28" fill="#ffa" stroke="darkorange" stroke-width="4" />
-                <path d="M 20 17 L 30 32 L 40 17 Z" fill="darkorange" stroke="none" stroke-width="4" />
-                <path d="M 20 32 L 30 47 L 40 32 Z" fill="darkorange" stroke="none" stroke-width="4" />
-              </g>
-            </svg>
-          </td>
-        </tr>
-      </table>
-    </div>
+            <div class="angle-summary">
+              <span
+                >角度の合計 <strong id="angle-total">0.000000°</strong></span
+              >
+              <span id="pi-total">0.000000 π rad</span>
+            </div>
+          </section>
+        </div>
 
-    <div>
-      <h1>このツールの作者</h1>
-      <a href="https://twitter.com/tatt61880">Tatt(たっと) @tatt61880</a><br>
-      要望などあれば、上記アカウントへどうぞ！<br>
-    </div>
-  </div>
-</body>
+        <div class="playback-panel">
+          <div class="line-controls">
+            <label for="line-select">表示する並び</label>
+            <button id="previous-line" type="button" aria-label="前の並び">
+              前へ
+            </button>
+            <select
+              id="line-select"
+              aria-label="表示する行・列・対角線"
+            ></select>
+            <button id="next-line" type="button" aria-label="次の並び">
+              次へ
+            </button>
+            <span id="line-count"></span>
+          </div>
+          <div class="progress-heading">
+            <label for="progress"
+              >並べた三角形 <strong id="step-count">0 / 16</strong></label
+            >
+            <span id="phase-info" role="status">再生して始めましょう</span>
+          </div>
+          <input
+            id="progress"
+            type="range"
+            min="0"
+            max="16"
+            step="1"
+            value="0"
+            aria-label="並べた三角形の数"
+          />
+          <div
+            class="playback-controls"
+            role="group"
+            aria-label="三角形の再生とリセット"
+          >
+            <button id="step-back" type="button">1つ戻る</button>
+            <button id="buttonPlay" class="play-button" type="button">
+              ▶ 再生
+            </button>
+            <button id="step-forward" type="button">1つ進む</button>
+            <button
+              id="first-line"
+              class="reset-button"
+              type="button"
+              aria-label="全体を最初から（横1行目に戻す）"
+              title="横1行目に戻して一時停止"
+            >
+              全体を最初から
+            </button>
+            <button
+              id="buttonReset"
+              class="reset-button"
+              type="button"
+              aria-label="選択中の並びを最初から"
+              title="選択中の並びの先頭に戻して一時停止"
+            >
+              並びを最初から
+            </button>
+          </div>
+          <div class="settings">
+            <div class="speed-controls" role="group" aria-label="再生速度">
+              <button
+                id="buttonSpeedDown"
+                type="button"
+                aria-label="速度を下げる"
+              >
+                −
+              </button>
+              <output id="speed-info" aria-live="polite">速度 2 / 9</output>
+              <button
+                id="buttonSpeedUp"
+                type="button"
+                aria-label="速度を上げる"
+              >
+                ＋
+              </button>
+            </div>
+            <label
+              ><input id="options-omit" type="checkbox" checked />
+              回転省略</label
+            >
+            <label
+              ><input id="options-colorful" type="checkbox" checked />
+              カラフル</label
+            >
+            <label
+              ><input id="options-auto" type="checkbox" checked />
+              次の並びへ自動で進む</label
+            >
+          </div>
+          <p class="control-note">
+            「全体を最初から」は横1行目へ戻ります。「並びを最初から」は選択中の並びをリセットします。
+          </p>
+        </div>
 
+        <details class="fraction-details">
+          <summary>選択中の16個の分数と角度</summary>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">順番</th>
+                  <th scope="col">位置</th>
+                  <th scope="col">分数</th>
+                  <th scope="col">角度</th>
+                  <th scope="col">合計</th>
+                </tr>
+              </thead>
+              <tbody id="fraction-list"></tbody>
+            </table>
+          </div>
+          <p class="control-note">角度の表示は小数点以下6桁に丸めています。</p>
+        </details>
+        <p id="validation-info" class="validation-info"></p>
+      </section>
+
+      <section class="explanation">
+        <h2>これは何？</h2>
+        <p>
+          <a href="https://twitter.com/toku51n">TokusiNさん (@toku51n)</a
+          >が作成した魔方陣の性質の一部を図示したものです。
+          1～512を重複なく1回ずつ使った、256個の既約真分数が並んでいます。
+        </p>
+        <p>
+          分数 <var>a</var> / <var>b</var> から、横の辺が <var>b</var>、縦の辺が
+          <var>a</var> の直角三角形を作ると、原点の角度は
+          <strong>atan(<var>a</var> / <var>b</var>)</strong> になります。
+          横16行・縦16列・2本の対角線のどれを選んでも、16個の角度の和が<strong>360度（2πラジアン）</strong>になります。
+        </p>
+        <p>
+          「回転省略」をオフにすると、分母、分子、回転の順に三角形を確認できます。オンでは、三角形を回転後の位置に直接並べます。
+        </p>
+        <p class="source-links">
+          出典：<a href="https://twitter.com/toku51n/status/1533401499983749121"
+            >元の投稿</a
+          >
+          ／
+          <a href="https://twitter.com/toku51n/status/1533631580450615297"
+            >関連する投稿</a
+          >
+          ／
+          <a href="https://github.com/TokusiN/AtanMagic/blob/main/data.txt"
+            >公開されている生データ</a
+          >
+        </p>
+      </section>
+
+      <details class="shortcuts">
+        <summary>ショートカットキー</summary>
+        <dl>
+          <dt><kbd>Space</kbd></dt>
+          <dd>再生・一時停止</dd>
+          <dt><kbd>R</kbd></dt>
+          <dd>選択中の並びを最初から</dd>
+          <dt><kbd>←</kbd> / <kbd>→</kbd></dt>
+          <dd>1つ戻る・1つ進む</dd>
+          <dt><kbd>Shift</kbd> + <kbd>↓</kbd> / <kbd>↑</kbd></dt>
+          <dd>速度を下げる・上げる</dd>
+        </dl>
+        <p class="control-note">
+          ボタンや入力欄などを操作中は、各項目の標準のキー操作を優先します。
+        </p>
+      </details>
+
+      <footer>
+        <p>
+          ツール制作：<a href="https://twitter.com/tatt61880"
+            >Tatt(たっと) @tatt61880</a
+          >
+          ／ <a href="https://github.com/tatt61880/AtanMagic">GitHub</a>
+        </p>
+      </footer>
+    </main>
+  </body>
 </html>
